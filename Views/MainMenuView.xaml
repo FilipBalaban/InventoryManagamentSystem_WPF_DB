@@ -7,6 +7,18 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="Inventory Management System" Style="{StaticResource Heading}" HorizontalAlignment="Center"/>
+        <Button Grid.Row="1"  Margin="0, 48, 0, 0" Content="Add product" Command="{Binding AddProductCommand}"/>
+        <Button Grid.Row="2" Margin="0, 24, 0, 0" Content="Remove product" Command="{Binding RemoveProductCommand}"/>
+        <Button Grid.Row="3" Margin="0, 24, 0, 0" Content="Browse products" Command="{Binding BrowseProductsCommand}"/>
+        <Button Grid.Row="4" Margin="0, 24, 0, 0" Content="Quit" Command="{Binding QuitCommand}"/>
     </Grid>
 </UserControl>

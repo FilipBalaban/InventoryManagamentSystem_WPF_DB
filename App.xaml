@@ -4,6 +4,20 @@
              xmlns:local="clr-namespace:InventoryManagamentSystem_WPF_DB"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <Style TargetType="TextBlock" x:Key="Heading">
+            <Setter Property="FontSize" Value="24"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+        </Style>
+        <Style TargetType="Button">
+            <Setter Property="Padding" Value="18, 12"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="MaxWidth" Value="256"/>
+            <Setter Property="MinWidth" Value="128"/>
+        </Style>
+        <Style TargetType="TextBox">
+            <Setter Property="MinWidth" Value="96"/>
+            <Setter Property="Padding" Value="2"/>
+        </Style>
+
     </Application.Resources>
 </Application>
