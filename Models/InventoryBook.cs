@@ -21,6 +21,10 @@ namespace InventoryManagamentSystem_WPF_DB.Models
             {
                 _products.Add(product);
             }
+            else
+            {
+                throw new DuplicateProductException(product);
+            }
         }
         public void RemoveProduct(Product product)
         {
@@ -36,6 +40,10 @@ namespace InventoryManagamentSystem_WPF_DB.Models
         public IEnumerable<Product> GetProducts()
         {
             return _products;
+        }
+        public IEnumerable<Product> GetProductByCategory(ProductCategoryEnum category)
+        {
+            return _products.Where(p => p.ProductCategory == category);
         }
     }
 }

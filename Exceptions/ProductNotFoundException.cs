@@ -10,25 +10,27 @@ namespace InventoryManagamentSystem_WPF_DB.Exceptions
 {
     public class ProductNotFoundException : Exception
     {
-        public Product product { get; }
+        public Product Product { get; }
 
         public ProductNotFoundException(Product product)
         {
-            this.product = product;
+            this.Product = product;
         }
 
         public ProductNotFoundException(string? message, Product product) : base(message)
         {
-            this.product = product;
+            this.Product = product;
         }
 
         public ProductNotFoundException(string? message, Exception? innerException, Product product) : base(message, innerException)
         {
-            this.product = product;
+            this.Product = product;
         }
 
         protected ProductNotFoundException(SerializationInfo info, StreamingContext context) : base(info, context)
         {
         }
+
+        public override string Message => $"Product name: {Product.Name}, ID: {Product.ProductID} does not exist in the inventory!";
     }
 }
