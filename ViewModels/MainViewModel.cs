@@ -1,4 +1,5 @@
-﻿using System;
+﻿using InventoryManagamentSystem_WPF_DB.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,9 +10,9 @@ namespace InventoryManagamentSystem_WPF_DB.ViewModels
     public class MainViewModel
     {
         public BaseViewModel CurrentViewModel { get; set; }
-        public MainViewModel()
+        public MainViewModel(Inventory inventory)
         {
-            CurrentViewModel = new MainMenuViewModel();
+            CurrentViewModel = new AddProductViewModel(inventory);
         }
 
     }

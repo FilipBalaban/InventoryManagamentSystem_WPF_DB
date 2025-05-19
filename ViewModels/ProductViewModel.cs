@@ -9,21 +9,71 @@ using System.Windows.Controls;
 
 namespace InventoryManagamentSystem_WPF_DB.ViewModels
 {
-    public class ProductViewModel: BaseViewModel
+    public class ProductViewModel : BaseViewModel
     {
+        private string? _name;
+        private ProductCategoryEnum _productCategory;
+        private decimal _price;
+        private int _quantity;
         protected readonly Product _product;
-        public string? Name => _product.Name;
-        public string ProductCategory => _product.ProductCategory.ToString();
-        public string Price => _product.Price.ToString();
-        public string Quantity => _product.Quantity.ToString();
+        private Grid _dynamicGrid;
 
+        public string? Name
+        {
+            get => _name;
+            set
+            {
+                _name = value;
+                OnPropertyChanged(nameof(Name));
+            }
+        }
+        public ProductCategoryEnum ProductCategory
+        {
+            get => _productCategory;
+            set
+            {
+                _productCategory = value;
+                OnPropertyChanged(nameof(ProductCategory));
+            }
+        }
+        public decimal Price
+        {
+            get => _price;
+            set
+            {
+                _price = value;
+                OnPropertyChanged(nameof(Price));
+            }
+        }
+        public int Quantity
+        {
+            get => _quantity;
+            set
+            {
+                _quantity = value;
+                OnPropertyChanged(nameof(Quantity));
+            }
+        }
+        public Grid DynamicGrid
+        {
+            get => _dynamicGrid;
+            set
+            {
+                _dynamicGrid = value;
+                OnPropertyChanged(nameof(DynamicGrid));
+            }
+        }
+        public ProductViewModel()
+        {
+            
+        }
         public ProductViewModel(Product product)
         {
             _product = product;
         }
-        public virtual StackPanel GetDynamicInputStackPanel()
+        public virtual Grid GetDynamicInputGrid()
         {
-            return new StackPanel();
+            return new Grid();
         }
         public virtual StackPanel GetDynamicDataStackPanel()
         {
@@ -33,6 +83,5 @@ namespace InventoryManagamentSystem_WPF_DB.ViewModels
         {
             return new GridView();
         }
-
     }
 }
