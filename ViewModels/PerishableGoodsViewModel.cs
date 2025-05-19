@@ -59,7 +59,7 @@ namespace InventoryManagamentSystem_WPF_DB.ViewModels
             throw new NotImplementedException();
         }
 
-        public override StackPanel GetDynamicDataStackPanel()
+        public override Grid GetDynamicDataGrid()
         {
             throw new NotImplementedException();
         }
@@ -128,6 +128,10 @@ namespace InventoryManagamentSystem_WPF_DB.ViewModels
             grid.Children.Add(expirationDateBox);
 
             return grid;
+        }
+        public override bool ArePropertiesFilled()
+        {
+            return base.ArePropertiesFilled() && _calories > 0 && _weight > 0;
         }
     }
 }

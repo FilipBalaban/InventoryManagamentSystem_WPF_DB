@@ -40,7 +40,12 @@ namespace InventoryManagamentSystem_WPF_DB.ViewModels
 
         public ElectronicsViewModel(ElectronicsProduct product): base(product)
         {
+            Name = product.Name;
             ProductCategory = ProductCategoryEnum.Electronics;
+            Price = product.Price;
+            Quantity = product.Quantity;
+            Voltage = product.Voltage;
+            BatteryCapacity = product.BatteryCapacity;
         }
 
         public override GridView GetContentGridView()
@@ -48,9 +53,50 @@ namespace InventoryManagamentSystem_WPF_DB.ViewModels
             throw new NotImplementedException();
         }
 
-        public override StackPanel GetDynamicDataStackPanel()
+        public override Grid GetDynamicDataGrid()
         {
-            throw new NotImplementedException();
+            Grid grid = new Grid();
+            grid.RowDefinitions.Add(new RowDefinition());
+            grid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(8) });
+            grid.RowDefinitions.Add(new RowDefinition());
+
+            grid.ColumnDefinitions.Add(new ColumnDefinition());
+            grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(8) });
+            grid.ColumnDefinitions.Add(new ColumnDefinition());
+
+            grid.DataContext = this;
+
+            // Name
+            TextBlock nameBlock = new TextBlock()
+            {
+                Text = "Name:"
+            };
+            TextBlock nameBlockValue = new TextBlock();
+            Binding nameBinding = new Binding("Name");
+            nameBlockValue.SetBinding(TextBox.TextProperty, nameBinding);
+
+            Grid.SetRow(nameBlock, 0);
+            Grid.SetRow(nameBlockValue, 2);
+            grid.Children.Add(nameBlock);
+            grid.Children.Add(nameBlockValue);
+
+            // Battery capacity
+            TextBlock batteryBlock = new TextBlock()
+            {
+                Text = "Battery capacity:"
+            };
+            Grid.SetColumn(batteryBlock, 2);
+            TextBox batteryBox = new TextBox();
+            Binding batteryBinding = new Binding("Product.BatteryCapacity");
+            batteryBinding.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
+
+            batteryBox.SetBinding(TextBox.TextProperty, batteryBinding);
+            Grid.SetColumn(batteryBox, 2);
+            Grid.SetRow(batteryBox, 2);
+            grid.Children.Add(batteryBlock);
+            grid.Children.Add(batteryBox);
+
+            return grid;
         }
 
         public override Grid GetDynamicInputGrid()
@@ -96,6 +142,10 @@ namespace InventoryManagamentSystem_WPF_DB.ViewModels
             grid.Children.Add(batteryBox);
 
             return grid;
+        }
+        public override bool ArePropertiesFilled()
+        {
+            return base.ArePropertiesFilled() && _voltage > 0 && _batteryCapacity > 0;
         }
     }
 }

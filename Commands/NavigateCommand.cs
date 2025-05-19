@@ -1,0 +1,16 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace InventoryManagamentSystem_WPF_DB.Commands
+{
+    public class NavigateCommand : BaseCommand
+    {
+        public override void Execute(object? parameter)
+        {
+            throw new NotImplementedException();
+        }
+    }
+}

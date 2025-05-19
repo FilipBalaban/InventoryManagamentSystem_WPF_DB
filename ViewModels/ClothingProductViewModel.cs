@@ -46,7 +46,7 @@ namespace InventoryManagamentSystem_WPF_DB.ViewModels
             throw new NotImplementedException();
         }
 
-        public override StackPanel GetDynamicDataStackPanel()
+        public override Grid GetDynamicDataGrid()
         {
             throw new NotImplementedException();
         }

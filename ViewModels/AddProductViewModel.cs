@@ -2,6 +2,7 @@
 using InventoryManagamentSystem_WPF_DB.Models;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,11 +18,17 @@ namespace InventoryManagamentSystem_WPF_DB.ViewModels
         private ProductCategoryEnum _selectedCategory;
         private Grid _dynamicContentGrid;
 
-        public ProductViewModel Product => _productViewModel;
-   
+        public ProductViewModel Product
+        {
+            get => _productViewModel;
+            set
+            {
+                _productViewModel = value;
+                OnPropertyChanged(nameof(Product));
+            }
+        }
         public Array ProductCategories => Enum.GetValues(typeof(ProductCategoryEnum));
-
-        public ICommand? AddProductCommand { get; set; }
+        public AddProductCommand? AddProductCommand { get; set; }
         public ICommand? CancelComamnd { get; }
 
         public ProductCategoryEnum SelectedCategory
@@ -31,7 +38,7 @@ namespace InventoryManagamentSystem_WPF_DB.ViewModels
             {
                 _selectedCategory = value;
                 OnPropertyChanged(nameof(SelectedCategory));
-                GetProductData();
+                UpdateProductViewModel();
             }
         }
         public Grid DynamicContentGrid
@@ -46,27 +53,24 @@ namespace InventoryManagamentSystem_WPF_DB.ViewModels
         public AddProductViewModel(Inventory inventory)
         {
             _inventory = inventory;
-            _productViewModel = new ProductViewModel();
-            AddProductCommand = new AddProductCommand(_inventory, _productViewModel);
+            AddProductCommand = new AddProductCommand(_inventory, null);
         }
-
-        private void GetProductData()
+        private void UpdateProductViewModel()
         {
-            _productViewModel = new ProductViewModel();
             switch (_selectedCategory)
             {
                 case ProductCategoryEnum.Electronics:
-                    _productViewModel = new ElectronicsViewModel();
+                    Product = new ElectronicsViewModel();
                     break;
                 case ProductCategoryEnum.PerishableGoods:
-                    _productViewModel = new PerishableGoodsViewModel();
+                    Product = new PerishableGoodsViewModel();
                     break;
                 case ProductCategoryEnum.Clothing:
-                    _productViewModel = new ClothingProductViewModel();
+                    Product = new ClothingProductViewModel();
                     break;
             }
-            ((AddProductCommand)AddProductCommand).ProductViewModel = _productViewModel;
-            DynamicContentGrid = _productViewModel.GetDynamicInputGrid();
+            AddProductCommand.ProductViewModel = Product;
+            DynamicContentGrid = Product.GetDynamicInputGrid();
         }
     }
 }

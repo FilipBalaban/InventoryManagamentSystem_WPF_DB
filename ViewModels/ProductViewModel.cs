@@ -11,10 +11,10 @@ namespace InventoryManagamentSystem_WPF_DB.ViewModels
 {
     public class ProductViewModel : BaseViewModel
     {
-        private string? _name;
+        private string? _name = string.Empty;
         private ProductCategoryEnum _productCategory;
-        private decimal _price;
-        private int _quantity;
+        private decimal _price = 0;
+        private int _quantity = 0;
         protected readonly Product _product;
         private Grid _dynamicGrid;
 
@@ -23,8 +23,11 @@ namespace InventoryManagamentSystem_WPF_DB.ViewModels
             get => _name;
             set
             {
-                _name = value;
-                OnPropertyChanged(nameof(Name));
+                if(_name != value)
+                {
+                    _name = value;
+                    OnPropertyChanged(nameof(Name));
+                }
             }
         }
         public ProductCategoryEnum ProductCategory
@@ -34,6 +37,7 @@ namespace InventoryManagamentSystem_WPF_DB.ViewModels
             {
                 _productCategory = value;
                 OnPropertyChanged(nameof(ProductCategory));
+                OnPropertyChanged(nameof(Name));
             }
         }
         public decimal Price
@@ -54,15 +58,6 @@ namespace InventoryManagamentSystem_WPF_DB.ViewModels
                 OnPropertyChanged(nameof(Quantity));
             }
         }
-        public Grid DynamicGrid
-        {
-            get => _dynamicGrid;
-            set
-            {
-                _dynamicGrid = value;
-                OnPropertyChanged(nameof(DynamicGrid));
-            }
-        }
         public ProductViewModel()
         {
             
@@ -75,13 +70,23 @@ namespace InventoryManagamentSystem_WPF_DB.ViewModels
         {
             return new Grid();
         }
-        public virtual StackPanel GetDynamicDataStackPanel()
+        public virtual Grid GetDynamicDataGrid()
         {
-            return new StackPanel();
+            return new Grid();
         }
         public virtual GridView GetContentGridView()
         {
             return new GridView();
+        }
+        public virtual bool ArePropertiesFilled()
+        {
+            return !string.IsNullOrEmpty(_name) && _price > 0 && _quantity > 0;
+        }
+        public virtual void ClearProperties()
+        {
+            Name = string.Empty;
+            Price = 0;
+            Quantity = 0;
         }
     }
 }
