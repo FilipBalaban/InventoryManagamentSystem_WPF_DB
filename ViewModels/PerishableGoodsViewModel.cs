@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using System.Windows.Media;
 
 namespace InventoryManagamentSystem_WPF_DB.ViewModels
 {
@@ -52,6 +53,9 @@ namespace InventoryManagamentSystem_WPF_DB.ViewModels
         public PerishableGoodsViewModel(PerishableGoodsProduct product): base(product)
         {
             ProductCategory = ProductCategoryEnum.PerishableGoods;
+            Calories = product.Calories;
+            Weight = product.Weight;
+            ExpirationDate = product.ExpirationDate;
         }
 
         public override GridView GetContentGridView()
@@ -59,9 +63,41 @@ namespace InventoryManagamentSystem_WPF_DB.ViewModels
             throw new NotImplementedException();
         }
 
-        public override Grid GetDynamicDataGrid()
+        public override UIElement GetDynamicDataGrid()
         {
-            throw new NotImplementedException();
+            Grid grid = GetBasePropertiesGrid();
+
+            grid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(8) }); // 3
+            grid.RowDefinitions.Add(new RowDefinition()); // 4
+            grid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(8) }); // 5
+            grid.RowDefinitions.Add(new RowDefinition()); // 6
+
+            // Calories
+            StackPanel caloriesTackPanel = GetTextBlockStackPanel("Calories");
+            Grid.SetRow(caloriesTackPanel, 4);
+            Grid.SetColumn(caloriesTackPanel, 0);
+            grid.Children.Add(caloriesTackPanel);
+
+            // Weight
+            StackPanel weightStackPanel = GetTextBlockStackPanel("Weight");
+            Grid.SetRow(weightStackPanel, 4);
+            Grid.SetColumn(weightStackPanel, 2);
+            grid.Children.Add(weightStackPanel);
+
+            // ExpirationDate
+            StackPanel expirationDateStackPanel = GetTextBlockStackPanel("ExpirationDate");
+            Grid.SetRow(expirationDateStackPanel, 6);
+            Grid.SetColumn(expirationDateStackPanel, 0);
+            grid.Children.Add(expirationDateStackPanel);
+
+            Border border = new Border
+            {
+                Background = new SolidColorBrush(Colors.LightGray),
+                Padding = new Thickness(10),
+            };
+
+            border.Child = grid;
+            return border;
         }
 
         public override Grid GetDynamicInputGrid()

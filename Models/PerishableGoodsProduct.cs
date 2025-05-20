@@ -18,5 +18,9 @@ namespace InventoryManagamentSystem_WPF_DB.Models
             Weight = weight;
             ExpirationDate = expirationDate;
         }
+        public override string ToString()
+        {
+            return base.ToString() + $"\nWeight: {Weight}\nCalories: {Calories}\nExpiration Date: {ExpirationDate}";
+        }
     }
 }

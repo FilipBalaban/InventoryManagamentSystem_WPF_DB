@@ -15,6 +15,6 @@
         MaxWidth="600"
         Margin="24"
         VerticalAlignment="Center">
-        <views:AddProductView DataContext="{Binding CurrentViewModel}" />
+        <views:RemoveProductView DataContext="{Binding CurrentViewModel}" />
     </Grid>
 </Window>

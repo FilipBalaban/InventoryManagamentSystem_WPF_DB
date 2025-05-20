@@ -15,5 +15,9 @@ namespace InventoryManagamentSystem_WPF_DB.Models
             Fabric = fabric;
             Size = size;
         }
+        public override string ToString()
+        {
+            return base.ToString() + $"\nFabric: {Fabric}\nSize: {Size}";
+        }
     }
 }

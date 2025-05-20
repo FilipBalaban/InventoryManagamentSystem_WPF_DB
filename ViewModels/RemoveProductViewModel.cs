@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
@@ -14,7 +15,7 @@ namespace InventoryManagamentSystem_WPF_DB.ViewModels
     {
         private string? _productID;
         private readonly Inventory _inventory;
-        private Grid _dynamicContentGrid;
+        private UIElement _dynamicContentGrid;
 
         public string? ProductID
         {
@@ -27,13 +28,13 @@ namespace InventoryManagamentSystem_WPF_DB.ViewModels
                 ((SearchCommand)SearchCommand).ProductID = _productID;
             }
         }
-        public Grid DynamicContentGrid
+        public UIElement DynamicContentElement
         {
             get => _dynamicContentGrid;
             set
             {
                 _dynamicContentGrid = value;
-                OnPropertyChanged(nameof(DynamicContentGrid));
+                OnPropertyChanged(nameof(DynamicContentElement));
             }
         }
 
@@ -45,7 +46,11 @@ namespace InventoryManagamentSystem_WPF_DB.ViewModels
             _inventory = inventory;
             Product product = new ElectronicsProduct("Phone", ProductCategoryEnum.Electronics, 253, 5, 235, 5);
             _inventory.AddProduct(product);
-            RemoveProductCommand = new RemoveProductCommand(inventory, _productID);
+            product = new ClothingProduct("Hoodie", ProductCategoryEnum.Clothing, 89.99m, 1, ClothingFabricEnum.Silk, ClothingSizeEnum.M);
+            _inventory.AddProduct(product);
+            product = new PerishableGoodsProduct("Apple", ProductCategoryEnum.PerishableGoods, 1.99m, 1, 50, 75, new DateTime(2025, 7, 1));
+            _inventory.AddProduct(product);
+            RemoveProductCommand = new RemoveProductCommand(inventory, _productID, this);
             SearchCommand = new SearchCommand(_inventory, _productID, this);
         }
     }

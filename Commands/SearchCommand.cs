@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace InventoryManagamentSystem_WPF_DB.Commands
 {
@@ -29,12 +30,12 @@ namespace InventoryManagamentSystem_WPF_DB.Commands
             if (_inventory.GetProducts().Contains(product))
             {
                 GetProductViewModel(product);
-                _removeProductViewModel.DynamicContentGrid = _productViewModel.GetDynamicDataGrid();
+                _removeProductViewModel.DynamicContentElement = _productViewModel.GetDynamicDataGrid();
+                return;
             }
-            else
-            {
-                MessageBox.Show(("not found"));
-            }
+            
+            _removeProductViewModel.DynamicContentElement = new TextBlock { Text = "Product not found" }; 
+            
         }
         private void GetProductViewModel(Product product)
         {

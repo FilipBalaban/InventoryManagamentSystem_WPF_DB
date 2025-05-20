@@ -1,12 +1,14 @@
 ﻿using InventoryManagamentSystem_WPF_DB.Models;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using System.Windows.Media;
 
 namespace InventoryManagamentSystem_WPF_DB.ViewModels
 {
@@ -40,10 +42,7 @@ namespace InventoryManagamentSystem_WPF_DB.ViewModels
 
         public ElectronicsViewModel(ElectronicsProduct product): base(product)
         {
-            Name = product.Name;
             ProductCategory = ProductCategoryEnum.Electronics;
-            Price = product.Price;
-            Quantity = product.Quantity;
             Voltage = product.Voltage;
             BatteryCapacity = product.BatteryCapacity;
         }
@@ -53,50 +52,33 @@ namespace InventoryManagamentSystem_WPF_DB.ViewModels
             throw new NotImplementedException();
         }
 
-        public override Grid GetDynamicDataGrid()
+        public override UIElement GetDynamicDataGrid()
         {
-            Grid grid = new Grid();
-            grid.RowDefinitions.Add(new RowDefinition());
-            grid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(8) });
-            grid.RowDefinitions.Add(new RowDefinition());
+            Grid grid = GetBasePropertiesGrid();
 
-            grid.ColumnDefinitions.Add(new ColumnDefinition());
-            grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(8) });
-            grid.ColumnDefinitions.Add(new ColumnDefinition());
+            grid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(8) }); // 3
+            grid.RowDefinitions.Add(new RowDefinition()); // 4
 
-            grid.DataContext = this;
+            // Voltage
+            StackPanel voltage = GetTextBlockStackPanel("Voltage", "V");
+            Grid.SetRow(voltage, 4);
+            Grid.SetColumn(voltage, 0);
+            grid.Children.Add(voltage);
 
-            // Name
-            TextBlock nameBlock = new TextBlock()
+            // BatteryCapacity
+            StackPanel batteryCapacity = GetTextBlockStackPanel("BatteryCapacity", "mAh");
+            Grid.SetRow(batteryCapacity, 4);
+            Grid.SetColumn(batteryCapacity, 2);
+            grid.Children.Add(batteryCapacity);
+
+            Border border = new Border
             {
-                Text = "Name:"
+                Background = new SolidColorBrush(Colors.LightGray),
+                Padding = new Thickness(10),
             };
-            TextBlock nameBlockValue = new TextBlock();
-            Binding nameBinding = new Binding("Name");
-            nameBlockValue.SetBinding(TextBox.TextProperty, nameBinding);
 
-            Grid.SetRow(nameBlock, 0);
-            Grid.SetRow(nameBlockValue, 2);
-            grid.Children.Add(nameBlock);
-            grid.Children.Add(nameBlockValue);
-
-            // Battery capacity
-            TextBlock batteryBlock = new TextBlock()
-            {
-                Text = "Battery capacity:"
-            };
-            Grid.SetColumn(batteryBlock, 2);
-            TextBox batteryBox = new TextBox();
-            Binding batteryBinding = new Binding("Product.BatteryCapacity");
-            batteryBinding.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
-
-            batteryBox.SetBinding(TextBox.TextProperty, batteryBinding);
-            Grid.SetColumn(batteryBox, 2);
-            Grid.SetRow(batteryBox, 2);
-            grid.Children.Add(batteryBlock);
-            grid.Children.Add(batteryBox);
-
-            return grid;
+            border.Child = grid;
+            return border;
         }
 
         public override Grid GetDynamicInputGrid()

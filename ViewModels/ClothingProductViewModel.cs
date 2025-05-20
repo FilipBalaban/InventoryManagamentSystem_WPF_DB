@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using System.Windows.Media;
 
 namespace InventoryManagamentSystem_WPF_DB.ViewModels
 {
@@ -39,6 +40,8 @@ namespace InventoryManagamentSystem_WPF_DB.ViewModels
         public ClothingProductViewModel(ClothingProduct product) : base(product)
         {
             ProductCategory = ProductCategoryEnum.Clothing;
+            Fabric = product.Fabric;
+            Size = product.Size;
         }
 
         public override GridView GetContentGridView()
@@ -46,9 +49,33 @@ namespace InventoryManagamentSystem_WPF_DB.ViewModels
             throw new NotImplementedException();
         }
 
-        public override Grid GetDynamicDataGrid()
+        public override UIElement GetDynamicDataGrid()
         {
-            throw new NotImplementedException();
+            Grid grid = GetBasePropertiesGrid();
+
+            grid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(8) }); // 3
+            grid.RowDefinitions.Add(new RowDefinition()); // 4
+
+            // Fabric
+            StackPanel fabricStackPanel = GetTextBlockStackPanel("Fabric");
+            Grid.SetRow(fabricStackPanel, 4);
+            Grid.SetColumn(fabricStackPanel, 0);
+            grid.Children.Add(fabricStackPanel);
+
+            // Size
+            StackPanel sizeStackPanel = GetTextBlockStackPanel("Size");
+            Grid.SetRow(sizeStackPanel, 4);
+            Grid.SetColumn(sizeStackPanel, 2);
+            grid.Children.Add(sizeStackPanel);
+
+            Border border = new Border
+            {
+                Background = new SolidColorBrush(Colors.LightGray),
+                Padding = new Thickness(10),
+            };
+
+            border.Child = grid;
+            return border;
         }
 
         public override Grid GetDynamicInputGrid()

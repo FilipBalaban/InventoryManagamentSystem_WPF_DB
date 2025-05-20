@@ -14,6 +14,7 @@
             <RowDefinition Height="auto" />
             <RowDefinition Height="auto" />
             <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
         <TextBlock
             HorizontalAlignment="Center"
@@ -42,7 +43,7 @@
         <ContentControl
             Grid.Row="2"
             Margin="0,16,0,0"
-            Content="{Binding DynamicContentGrid, UpdateSourceTrigger=PropertyChanged}" />
+            Content="{Binding DynamicContentElement, UpdateSourceTrigger=PropertyChanged}" />
 
         <StackPanel
             Grid.Row="3"

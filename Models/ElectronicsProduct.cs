@@ -17,6 +17,9 @@ namespace InventoryManagamentSystem_WPF_DB.Models
             Voltage = voltage;
             BatteryCapacity = batteryCapacity;
         }
-
+        public override string ToString()
+        {
+            return base.ToString() + $"\nVoltage: {Voltage}\nBattery Capacity: {BatteryCapacity}";
+        }
     }
 }

@@ -12,7 +12,7 @@ namespace InventoryManagamentSystem_WPF_DB.ViewModels
         public BaseViewModel CurrentViewModel { get; set; }
         public MainViewModel(Inventory inventory)
         {
-            CurrentViewModel = new AddProductViewModel(inventory);
+            CurrentViewModel = new RemoveProductViewModel(inventory);
         }
 
     }
