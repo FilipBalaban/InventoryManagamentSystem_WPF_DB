@@ -1,4 +1,6 @@
-﻿using InventoryManagamentSystem_WPF_DB.Models;
+﻿using InventoryManagamentSystem_WPF_DB.Commands;
+using InventoryManagamentSystem_WPF_DB.Models;
+using InventoryManagamentSystem_WPF_DB.Services;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -73,18 +75,12 @@ namespace InventoryManagamentSystem_WPF_DB.ViewModels
             }
         }
         public ICommand ReturnCommand { get; set; }
-        public BrowseProductsViewModel(Inventory inventory)
+        public BrowseProductsViewModel(Inventory inventory, NavigationService navigationService)
         {
             _inventory = inventory;
-            Product product = new ElectronicsProduct("Phone", ProductCategoryEnum.Electronics, 253, 5, 235, 5);
-            _inventory.AddProduct(product);
-            product = new ClothingProduct("Hoodie", ProductCategoryEnum.Clothing, 89.99m, 1, ClothingFabricEnum.Silk, ClothingSizeEnum.M);
-            _inventory.AddProduct(product);
-            product = new PerishableGoodsProduct("Apple", ProductCategoryEnum.PerishableGoods, 1.99m, 1, 50, 75, new DateTime(2025, 7, 1));
-            _inventory.AddProduct(product);
-
             _products = new ObservableCollection<ProductViewModel>();
             AllProductsRadioChecked = true;
+            ReturnCommand = new NavigateCommand(navigationService);
         }
         public void UpdateProducts()
         {

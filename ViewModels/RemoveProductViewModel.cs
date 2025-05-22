@@ -1,5 +1,6 @@
 ﻿using InventoryManagamentSystem_WPF_DB.Commands;
 using InventoryManagamentSystem_WPF_DB.Models;
+using InventoryManagamentSystem_WPF_DB.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+
 
 namespace InventoryManagamentSystem_WPF_DB.ViewModels
 {
@@ -37,21 +39,15 @@ namespace InventoryManagamentSystem_WPF_DB.ViewModels
                 OnPropertyChanged(nameof(DynamicContentElement));
             }
         }
-
         public ICommand SearchCommand { get; }
         public ICommand RemoveProductCommand { get; }
         public ICommand CancelCommand { get; }
-        public RemoveProductViewModel(Inventory inventory)
+        public RemoveProductViewModel(Inventory inventory, NavigationService navigationService)
         {
             _inventory = inventory;
-            Product product = new ElectronicsProduct("Phone", ProductCategoryEnum.Electronics, 253, 5, 235, 5);
-            _inventory.AddProduct(product);
-            product = new ClothingProduct("Hoodie", ProductCategoryEnum.Clothing, 89.99m, 1, ClothingFabricEnum.Silk, ClothingSizeEnum.M);
-            _inventory.AddProduct(product);
-            product = new PerishableGoodsProduct("Apple", ProductCategoryEnum.PerishableGoods, 1.99m, 1, 50, 75, new DateTime(2025, 7, 1));
-            _inventory.AddProduct(product);
             RemoveProductCommand = new RemoveProductCommand(inventory, _productID, this);
             SearchCommand = new SearchCommand(_inventory, _productID, this);
+            CancelCommand = new NavigateCommand(navigationService);
         }
     }
 }

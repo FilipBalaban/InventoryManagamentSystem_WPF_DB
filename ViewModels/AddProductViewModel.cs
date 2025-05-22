@@ -1,5 +1,7 @@
 ﻿using InventoryManagamentSystem_WPF_DB.Commands;
 using InventoryManagamentSystem_WPF_DB.Models;
+using InventoryManagamentSystem_WPF_DB.Services;
+using InventoryManagamentSystem_WPF_DB.Stores;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -29,7 +31,7 @@ namespace InventoryManagamentSystem_WPF_DB.ViewModels
         }
         public Array ProductCategories => Enum.GetValues(typeof(ProductCategoryEnum));
         public AddProductCommand? AddProductCommand { get; set; }
-        public ICommand? CancelComamnd { get; }
+        public ICommand? CancelCommand { get; }
 
         public ProductCategoryEnum SelectedCategory
         {
@@ -50,10 +52,11 @@ namespace InventoryManagamentSystem_WPF_DB.ViewModels
                 OnPropertyChanged(nameof(DynamicContentGrid));
             }
         }
-        public AddProductViewModel(Inventory inventory)
+        public AddProductViewModel(Inventory inventory, NavigationService navigationService)
         {
             _inventory = inventory;
             AddProductCommand = new AddProductCommand(_inventory, null);
+            CancelCommand = new NavigateCommand(navigationService);
         }
         private void UpdateProductViewModel()
         {

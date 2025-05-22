@@ -6,16 +6,31 @@
     xmlns:local="clr-namespace:InventoryManagamentSystem_WPF_DB"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:views="clr-namespace:InventoryManagamentSystem_WPF_DB.Views"
+    xmlns:vms="clr-namespace:InventoryManagamentSystem_WPF_DB.ViewModels"
     Title="MainWindow"
-    Width="1100"
+    Width="800"
     Height="450"
     FontSize="14"
     mc:Ignorable="d">
+    <Window.Resources>
+        <DataTemplate DataType="{x:Type vms:MainMenuViewModel}">
+            <views:MainMenuView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vms:AddProductViewModel}">
+            <views:AddProductView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vms:RemoveProductViewModel}">
+            <views:RemoveProductView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vms:BrowseProductsViewModel}">
+            <views:BrowseProductsView />
+        </DataTemplate>
+    </Window.Resources>
+
     <Grid
-        MaxWidth="1000"
+        MaxWidth="600"
         Margin="24"
-        HorizontalAlignment="Center"
         VerticalAlignment="Center">
-        <views:BrowseProductsView DataContext="{Binding CurrentViewModel}" />
+        <ContentControl Content="{Binding CurrentViewModel}" />
     </Grid>
 </Window>

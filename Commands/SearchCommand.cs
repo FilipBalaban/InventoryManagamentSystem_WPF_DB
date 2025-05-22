@@ -26,12 +26,15 @@ namespace InventoryManagamentSystem_WPF_DB.Commands
 
         public override void Execute(object? parameter)
         {
-            Product product = _inventory.GetProducts().FirstOrDefault(p => p.ProductID.ID.ToLower() == ProductID.ToLower());
-            if (_inventory.GetProducts().Contains(product))
+            if(!string.IsNullOrEmpty(ProductID))
             {
-                GetProductViewModel(product);
-                _removeProductViewModel.DynamicContentElement = _productViewModel.GetDynamicDataGrid();
-                return;
+                Product product = _inventory.GetProducts().FirstOrDefault(p => p.ProductID.ID.ToLower() == ProductID.ToLower());
+                if (_inventory.GetProducts().Contains(product))
+                {
+                    GetProductViewModel(product);
+                    _removeProductViewModel.DynamicContentElement = _productViewModel.GetDynamicDataGrid();
+                    return;
+                }
             }
             
             _removeProductViewModel.DynamicContentElement = new TextBlock { Text = "Product not found" }; 

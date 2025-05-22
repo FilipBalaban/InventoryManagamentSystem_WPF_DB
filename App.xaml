@@ -18,6 +18,5 @@
             <Setter Property="MinWidth" Value="96" />
             <Setter Property="Padding" Value="2" />
         </Style>
-
     </Application.Resources>
 </Application>

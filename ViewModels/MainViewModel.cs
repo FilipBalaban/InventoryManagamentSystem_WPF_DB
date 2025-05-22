@@ -1,4 +1,5 @@
 ﻿using InventoryManagamentSystem_WPF_DB.Models;
+using InventoryManagamentSystem_WPF_DB.Stores;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,13 +8,18 @@ using System.Threading.Tasks;
 
 namespace InventoryManagamentSystem_WPF_DB.ViewModels
 {
-    public class MainViewModel
+    public class MainViewModel: BaseViewModel
     {
-        public BaseViewModel CurrentViewModel { get; set; }
-        public MainViewModel(Inventory inventory)
+        private readonly NavigationStore? _navigationStore;
+        public BaseViewModel? CurrentViewModel => _navigationStore?.CurrentViewModel;
+        public MainViewModel(NavigationStore navigationStore)
         {
-            CurrentViewModel = new BrowseProductsViewModel(inventory);
+            _navigationStore = navigationStore;
+            _navigationStore.CurrentViewModelChanged += OnCurrentViewModelChanged;
         }
-
+        private void OnCurrentViewModelChanged()
+        {
+            OnPropertyChanged(nameof(CurrentViewModel));
+        }
     }
 }

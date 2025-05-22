@@ -1,4 +1,7 @@
-﻿using System;
+﻿using InventoryManagamentSystem_WPF_DB.Commands;
+using InventoryManagamentSystem_WPF_DB.Services;
+using InventoryManagamentSystem_WPF_DB.Stores;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,9 +16,12 @@ namespace InventoryManagamentSystem_WPF_DB.ViewModels
         public ICommand RemoveProductCommand { get; }
         public ICommand BrowseProductsCommand { get; }
         public ICommand QuitCommand { get; }
-        public MainMenuViewModel()
+        public MainMenuViewModel(NavigationService addProductNavigationService, NavigationService removeProductNavigationService, NavigationService browseProductsNavigationService)
         {
-            
+            AddProductCommand = new NavigateCommand(addProductNavigationService);
+            RemoveProductCommand = new NavigateCommand(removeProductNavigationService);
+            BrowseProductsCommand = new NavigateCommand(browseProductsNavigationService);
+            QuitCommand = new QuitCommand();
         }
     }
 }
