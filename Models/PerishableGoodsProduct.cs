@@ -12,7 +12,7 @@ namespace InventoryManagamentSystem_WPF_DB.Models
         public decimal Weight { get; }
         public DateTime ExpirationDate { get; }
 
-        public PerishableGoodsProduct(string name, ProductCategoryEnum productCategory, decimal price, int quantity, decimal calories, decimal weight, DateTime expirationDate) : base(name, productCategory, price, quantity)
+        public PerishableGoodsProduct(int id, string name, ProductCategoryEnum productCategory, decimal price, int quantity, decimal calories, decimal weight, DateTime expirationDate) : base(id, name, productCategory, price, quantity)
         {
             Calories = calories;
             Weight = weight;

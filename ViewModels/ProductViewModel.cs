@@ -12,14 +12,14 @@ namespace InventoryManagamentSystem_WPF_DB.ViewModels
 {
     public class ProductViewModel : BaseViewModel
     {
-        private string? _id = string.Empty;
+        private int _id;
         private string? _name = string.Empty;
         private ProductCategoryEnum _productCategory;
         private decimal _price = 0;
         private int _quantity = 0;
         protected readonly Product _product;
 
-        public string? ID
+        public int ID
         {
             get => _id;
             set
@@ -74,7 +74,7 @@ namespace InventoryManagamentSystem_WPF_DB.ViewModels
         public ProductViewModel(Product product)
         {
             _product = product;
-            ID = product.ProductID?.ID;
+            ID = product.ID;
             Name = product.Name;
             ProductCategory = product.ProductCategory;
             Price = product.Price;

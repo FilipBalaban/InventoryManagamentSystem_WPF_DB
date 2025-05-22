@@ -15,11 +15,11 @@ namespace InventoryManagamentSystem_WPF_DB.ViewModels
 {
     public class RemoveProductViewModel: BaseViewModel
     {
-        private string? _productID;
+        private int? _productID;
         private readonly Inventory _inventory;
         private UIElement _dynamicContentGrid;
 
-        public string? ProductID
+        public int? ProductID
         {
             get => _productID;
             set

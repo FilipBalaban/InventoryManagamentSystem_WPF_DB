@@ -15,9 +15,9 @@ namespace InventoryManagamentSystem_WPF_DB.Commands
         private readonly Inventory _inventory;
         private readonly RemoveProductViewModel _removeProductViewModel;
         private ProductViewModel _productViewModel;
-        public string ProductID { get; set; }
+        public int? ProductID { get; set; }
 
-        public SearchCommand(Inventory inventory, string productID, RemoveProductViewModel removeProductViewModel)
+        public SearchCommand(Inventory inventory, int? productID, RemoveProductViewModel removeProductViewModel)
         {
             _inventory = inventory;
             ProductID = productID;
@@ -26,9 +26,9 @@ namespace InventoryManagamentSystem_WPF_DB.Commands
 
         public override void Execute(object? parameter)
         {
-            if(!string.IsNullOrEmpty(ProductID))
+            if(ProductID != null)
             {
-                Product product = _inventory.GetProducts().FirstOrDefault(p => p.ProductID.ID.ToLower() == ProductID.ToLower());
+                Product product = _inventory.GetProducts().FirstOrDefault(p => p.ID == ProductID);
                 if (_inventory.GetProducts().Contains(product))
                 {
                     GetProductViewModel(product);

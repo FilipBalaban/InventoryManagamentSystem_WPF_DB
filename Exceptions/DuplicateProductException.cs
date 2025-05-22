@@ -30,6 +30,6 @@ namespace InventoryManagamentSystem_WPF_DB.Exceptions
         {
         }
 
-        public override string Message => $"Product name: {DuplicateProduct.Name}, ID: {DuplicateProduct.ProductID} already exists in the inventory!";
+        public override string Message => $"Product name: {DuplicateProduct.Name}, ID: {DuplicateProduct.ID} already exists in the inventory!";
     }
 }

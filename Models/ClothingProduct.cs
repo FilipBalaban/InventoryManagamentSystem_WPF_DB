@@ -10,7 +10,7 @@ namespace InventoryManagamentSystem_WPF_DB.Models
     {
         public ClothingFabricEnum Fabric { get; }
         public ClothingSizeEnum Size { get; }
-        public ClothingProduct(string name, ProductCategoryEnum productCategory, decimal price, int quantity, ClothingFabricEnum fabric, ClothingSizeEnum size) : base(name, productCategory, price, quantity)
+        public ClothingProduct(int id, string name, ProductCategoryEnum productCategory, decimal price, int quantity, ClothingFabricEnum fabric, ClothingSizeEnum size) : base(id, name, productCategory, price, quantity)
         {
             Fabric = fabric;
             Size = size;

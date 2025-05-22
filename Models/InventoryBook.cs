@@ -17,7 +17,7 @@ namespace InventoryManagamentSystem_WPF_DB.Models
         }
         public void AddProduct(Product product)
         {
-            if(!_products.Contains(_products.FirstOrDefault(p => p.ProductID.Equals(product.ProductID)))) 
+            if(!_products.Contains(_products.FirstOrDefault(p => p.ID == product.ID))) 
             {
                 _products.Add(product);
             }
@@ -28,7 +28,7 @@ namespace InventoryManagamentSystem_WPF_DB.Models
         }
         public void RemoveProduct(Product product)
         {
-            if (_products.Contains(_products.FirstOrDefault(p => p.ProductID.Equals(product.ProductID)))) 
+            if (_products.Contains(_products.FirstOrDefault(p => p.ID == product.ID))) 
             {
                 _products.Remove(product);
             }

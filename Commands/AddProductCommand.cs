@@ -65,18 +65,19 @@ namespace InventoryManagamentSystem_WPF_DB.Commands
         {
             switch (_productViewModel.ProductCategory)
             {
+                // TODO: Get rid of magic id numbers
                 case ProductCategoryEnum.Electronics:
-                    ElectronicsProduct electronics = new ElectronicsProduct(_productViewModel.Name, _productViewModel.ProductCategory, _productViewModel.Price, _productViewModel.Quantity, ((ElectronicsViewModel)_productViewModel).Voltage, ((ElectronicsViewModel)_productViewModel).BatteryCapacity);
+                    ElectronicsProduct electronics = new ElectronicsProduct(1, _productViewModel.Name, _productViewModel.ProductCategory, _productViewModel.Price, _productViewModel.Quantity, ((ElectronicsViewModel)_productViewModel).Voltage, ((ElectronicsViewModel)_productViewModel).BatteryCapacity);
                     _inventory.AddProduct(electronics);
                     break;
 
                 case ProductCategoryEnum.PerishableGoods:
-                    PerishableGoodsProduct perishableGoods = new PerishableGoodsProduct(_productViewModel.Name, _productViewModel.ProductCategory, _productViewModel.Price, _productViewModel.Quantity, ((PerishableGoodsViewModel)_productViewModel).Calories, ((PerishableGoodsViewModel)_productViewModel).Weight, ((PerishableGoodsViewModel)_productViewModel).ExpirationDate);
+                    PerishableGoodsProduct perishableGoods = new PerishableGoodsProduct(2, _productViewModel.Name, _productViewModel.ProductCategory, _productViewModel.Price, _productViewModel.Quantity, ((PerishableGoodsViewModel)_productViewModel).Calories, ((PerishableGoodsViewModel)_productViewModel).Weight, ((PerishableGoodsViewModel)_productViewModel).ExpirationDate);
                     _inventory.AddProduct(perishableGoods);
                     break;
 
                 case ProductCategoryEnum.Clothing:
-                    ClothingProduct clothing = new ClothingProduct(_productViewModel.Name, _productViewModel.ProductCategory, _productViewModel.Price, _productViewModel.Quantity, ((ClothingProductViewModel)_productViewModel).Fabric, ((ClothingProductViewModel)_productViewModel).Size);
+                    ClothingProduct clothing = new ClothingProduct(3, _productViewModel.Name, _productViewModel.ProductCategory, _productViewModel.Price, _productViewModel.Quantity, ((ClothingProductViewModel)_productViewModel).Fabric, ((ClothingProductViewModel)_productViewModel).Size);
                     _inventory.AddProduct(clothing);
                     break;
             }

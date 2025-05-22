@@ -31,6 +31,6 @@ namespace InventoryManagamentSystem_WPF_DB.Exceptions
         {
         }
 
-        public override string Message => $"Product name: {Product.Name}, ID: {Product.ProductID} does not exist in the inventory!";
+        public override string Message => $"Product name: {Product.Name}, ID: {Product.ID} does not exist in the inventory!";
     }
 }

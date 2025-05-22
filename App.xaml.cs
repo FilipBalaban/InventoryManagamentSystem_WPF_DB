@@ -1,7 +1,9 @@
-﻿using InventoryManagamentSystem_WPF_DB.Models;
+﻿using InventoryManagamentSystem_WPF_DB.DatabaseContext;
+using InventoryManagamentSystem_WPF_DB.Models;
 using InventoryManagamentSystem_WPF_DB.Services;
 using InventoryManagamentSystem_WPF_DB.Stores;
 using InventoryManagamentSystem_WPF_DB.ViewModels;
+using Microsoft.EntityFrameworkCore;
 using System.Configuration;
 using System.Data;
 using System.Windows;
@@ -15,6 +17,7 @@ namespace InventoryManagamentSystem_WPF_DB
     {
         private readonly Inventory _inventory;
         private readonly NavigationStore _navigationStore;
+        private const string CONNECTION_STRING = @"Data Source=DESKTOP-R16IC6C;Initial Catalog=InventoryManagementDB;Integrated Security=True;Encrypt=True;Trust Server Certificate=True";
         public App()
         {
             _inventory = new Inventory();
@@ -23,7 +26,13 @@ namespace InventoryManagamentSystem_WPF_DB
 
         protected override void OnStartup(StartupEventArgs e)
         {
-            _navigationStore.CurrentViewModel = CreateMainMenuViewModel();
+            DbContextOptions options = new DbContextOptionsBuilder().UseSqlServer(CONNECTION_STRING).Options;
+            using (InventoryDbContext dbContext = new InventoryDbContext(options))
+            {
+                dbContext.Database.Migrate();
+            }
+
+                _navigationStore.CurrentViewModel = CreateMainMenuViewModel();
             MainWindow mainWindow = new MainWindow()
             {
                 DataContext = new MainViewModel(_navigationStore)
