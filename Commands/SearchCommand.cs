@@ -26,7 +26,7 @@ namespace InventoryManagamentSystem_WPF_DB.Commands
 
         public override void Execute(object? parameter)
         {
-            Product product = _inventory.GetProducts().FirstOrDefault(p => p.ProductID.ID == ProductID);
+            Product product = _inventory.GetProducts().FirstOrDefault(p => p.ProductID.ID.ToLower() == ProductID.ToLower());
             if (_inventory.GetProducts().Contains(product))
             {
                 GetProductViewModel(product);

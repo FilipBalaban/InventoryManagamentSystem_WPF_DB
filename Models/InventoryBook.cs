@@ -41,7 +41,7 @@ namespace InventoryManagamentSystem_WPF_DB.Models
         {
             return _products;
         }
-        public IEnumerable<Product> GetProductByCategory(ProductCategoryEnum category)
+        public IEnumerable<Product> GetProductsByCategory(ProductCategoryEnum category)
         {
             return _products.Where(p => p.ProductCategory == category);
         }

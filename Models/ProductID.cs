@@ -24,11 +24,11 @@ namespace InventoryManagamentSystem_WPF_DB.Models
             switch (ProductCategory)
             {
                 case ProductCategoryEnum.Electronics:
-                    return $"El.{ObjectCounter}";
+                    return $"EL.{ObjectCounter.ToString().PadLeft(3, '0')}";
                 case ProductCategoryEnum.PerishableGoods:
-                    return $"Pg.{ObjectCounter}";
+                    return $"PG.{ObjectCounter.ToString().PadLeft(3, '0')}";
                 case ProductCategoryEnum.Clothing:
-                    return $"Cl.{ObjectCounter}";
+                    return $"CL.{ObjectCounter.ToString().PadLeft(3, '0')}";
                 default:
                     return string.Empty;
             }

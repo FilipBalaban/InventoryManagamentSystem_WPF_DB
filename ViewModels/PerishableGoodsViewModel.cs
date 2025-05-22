@@ -58,9 +58,40 @@ namespace InventoryManagamentSystem_WPF_DB.ViewModels
             ExpirationDate = product.ExpirationDate;
         }
 
-        public override GridView GetContentGridView()
+        public override ListView GetContentListView()
         {
-            throw new NotImplementedException();
+            ListView listView = new ListView();
+            GridView gridView = GetBaseGridView();
+
+            // Calories
+            GridViewColumn caloriesColumn = new GridViewColumn()
+            {
+                Header = "Calories",
+                DisplayMemberBinding = new Binding("Calories"),
+                Width = 100,
+            };
+            gridView.Columns.Add(caloriesColumn);
+
+            // Weight
+            GridViewColumn weightColumn = new GridViewColumn()
+            {
+                Header = "Weight",
+                DisplayMemberBinding = new Binding("Weight"),
+                Width = 100,
+            };
+            gridView.Columns.Add(weightColumn);
+
+            // Expiration Date
+            GridViewColumn expirationDateColumn = new GridViewColumn()
+            {
+                Header = "Expiration Date",
+                DisplayMemberBinding = new Binding("ExpirationDate"),
+                Width = 180,
+            };
+            gridView.Columns.Add(expirationDateColumn);
+
+            listView.View = gridView;
+            return listView;
         }
 
         public override UIElement GetDynamicDataGrid()

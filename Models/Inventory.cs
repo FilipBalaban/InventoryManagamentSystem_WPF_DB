@@ -26,5 +26,9 @@ namespace InventoryManagamentSystem_WPF_DB.Models
         {
             return _inventoryBook.GetProducts();
         }
+        public IEnumerable<Product> GetProductsByCategory(ProductCategoryEnum category)
+        {
+            return _inventoryBook.GetProductsByCategory(category);
+        }
     }
 }

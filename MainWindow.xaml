@@ -7,14 +7,15 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:views="clr-namespace:InventoryManagamentSystem_WPF_DB.Views"
     Title="MainWindow"
-    Width="800"
+    Width="1100"
     Height="450"
     FontSize="14"
     mc:Ignorable="d">
     <Grid
-        MaxWidth="600"
+        MaxWidth="1000"
         Margin="24"
+        HorizontalAlignment="Center"
         VerticalAlignment="Center">
-        <views:RemoveProductView DataContext="{Binding CurrentViewModel}" />
+        <views:BrowseProductsView DataContext="{Binding CurrentViewModel}" />
     </Grid>
 </Window>

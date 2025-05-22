@@ -12,13 +12,21 @@ namespace InventoryManagamentSystem_WPF_DB.ViewModels
 {
     public class ProductViewModel : BaseViewModel
     {
+        private string? _id = string.Empty;
         private string? _name = string.Empty;
         private ProductCategoryEnum _productCategory;
         private decimal _price = 0;
         private int _quantity = 0;
         protected readonly Product _product;
-        private Grid _dynamicGrid;
 
+        public string? ID
+        {
+            get => _id;
+            set
+            {
+                _id = value;
+            }
+        }
         public string? Name
         {
             get => _name;
@@ -66,7 +74,9 @@ namespace InventoryManagamentSystem_WPF_DB.ViewModels
         public ProductViewModel(Product product)
         {
             _product = product;
+            ID = product.ProductID?.ID;
             Name = product.Name;
+            ProductCategory = product.ProductCategory;
             Price = product.Price;
             Quantity = product.Quantity;
         }
@@ -114,9 +124,13 @@ namespace InventoryManagamentSystem_WPF_DB.ViewModels
 
             return grid;
         }
-        public virtual GridView GetContentGridView()
+        public virtual ListView GetContentListView()
         {
-            return new GridView();
+            ListView listView = new ListView();
+            GridView gridView = GetBaseGridView();
+            listView.View = gridView;
+
+            return listView;
         }
         public virtual bool ArePropertiesFilled()
         {
@@ -203,6 +217,59 @@ namespace InventoryManagamentSystem_WPF_DB.ViewModels
                 stackPanel.Children.Add(new TextBlock { Text = suffix });
             }
             return stackPanel;
+        }
+        protected GridView GetBaseGridView()
+        {
+            GridView gridView = new GridView();
+
+            // ID
+            Binding idBinding = new Binding("ID");
+            GridViewColumn idColumn = new GridViewColumn()
+            {
+                Header = "ID:",
+                DisplayMemberBinding = idBinding,
+                Width = 100
+            };
+            gridView.Columns.Add(idColumn);
+
+            // Name
+            GridViewColumn nameColumn = new GridViewColumn()
+            {
+                Header = "Name:",
+                DisplayMemberBinding = new Binding("Name"),
+                Width = 100
+
+            };
+            gridView.Columns.Add(nameColumn);
+
+            // Category
+            GridViewColumn categoryColumn = new GridViewColumn()
+            {
+                Header = "Category:",
+                DisplayMemberBinding = new Binding("ProductCategory"),
+                Width = 140
+            };
+            gridView.Columns.Add(categoryColumn);
+
+            // Price
+            GridViewColumn priceColumn = new GridViewColumn()
+            {
+                Header = "Price:",
+                DisplayMemberBinding = new Binding("Price"),
+                Width = 100
+            };
+            gridView.Columns.Add(priceColumn);
+
+            // Quantity
+            GridViewColumn quantityColumn = new GridViewColumn()
+            {
+                Header = "Quantity:",
+                DisplayMemberBinding = new Binding("Quantity"),
+                Width = 100
+            };
+            gridView.Columns.Add(quantityColumn);
+
+            return gridView;
         }
         private string FromPascalCase(string str)
         {

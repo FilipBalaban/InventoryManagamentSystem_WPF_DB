@@ -44,9 +44,30 @@ namespace InventoryManagamentSystem_WPF_DB.ViewModels
             Size = product.Size;
         }
 
-        public override GridView GetContentGridView()
+        public override ListView GetContentListView()
         {
-            throw new NotImplementedException();
+            ListView listView = new ListView();
+            GridView gridView = GetBaseGridView();
+
+            // Fabric
+            GridViewColumn fabricColumn = new GridViewColumn()
+            {
+                Header = "Fabric",
+                DisplayMemberBinding = new Binding("Fabric"),
+                Width = 100,
+            };
+            gridView.Columns.Add(fabricColumn);
+
+            // Size
+            GridViewColumn sizeCapacityColumn = new GridViewColumn()
+            {
+                Header = "Size",
+                DisplayMemberBinding = new Binding("Size"),
+                Width = 100,
+            };
+            gridView.Columns.Add(sizeCapacityColumn);
+            listView.View = gridView;
+            return listView;
         }
 
         public override UIElement GetDynamicDataGrid()

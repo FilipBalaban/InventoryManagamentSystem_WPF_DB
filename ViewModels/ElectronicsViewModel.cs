@@ -47,9 +47,30 @@ namespace InventoryManagamentSystem_WPF_DB.ViewModels
             BatteryCapacity = product.BatteryCapacity;
         }
 
-        public override GridView GetContentGridView()
+        public override ListView GetContentListView()
         {
-            throw new NotImplementedException();
+            ListView listView = new ListView();
+            GridView gridView = GetBaseGridView();
+
+            // Voltage
+            GridViewColumn voltageColumn = new GridViewColumn()
+            {
+                Header = "Voltage",
+                DisplayMemberBinding = new Binding("Voltage"),
+                Width = 100,
+            };
+            gridView.Columns.Add(voltageColumn);
+
+            // Battery Capacity
+            GridViewColumn batteryCapacityColumn = new GridViewColumn()
+            {
+                Header = "Battery Capacity",
+                DisplayMemberBinding = new Binding("BatteryCapacity"),
+                Width = 140,
+            };
+            gridView.Columns.Add(batteryCapacityColumn);
+            listView.View = gridView;
+            return listView;
         }
 
         public override UIElement GetDynamicDataGrid()
