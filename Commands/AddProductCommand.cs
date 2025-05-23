@@ -1,4 +1,5 @@
 ﻿using InventoryManagamentSystem_WPF_DB.Models;
+using InventoryManagamentSystem_WPF_DB.Stores;
 using InventoryManagamentSystem_WPF_DB.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -10,9 +11,9 @@ using System.Windows;
 
 namespace InventoryManagamentSystem_WPF_DB.Commands
 {
-    public class AddProductCommand : BaseCommand
+    public class AddProductCommand : AsyncBaseCommand
     {
-        private readonly Inventory _inventory;
+        private readonly InventoryStore _inventoryStore;
         private ProductViewModel _productViewModel;
         public ProductViewModel ProductViewModel
         {
@@ -35,9 +36,9 @@ namespace InventoryManagamentSystem_WPF_DB.Commands
         {
             return _productViewModel != null && _productViewModel.ArePropertiesFilled();
         }
-        public AddProductCommand(Inventory inventory, ProductViewModel productViewModel)
+        public AddProductCommand(InventoryStore inventoryStore, ProductViewModel productViewModel)
         {
-            _inventory = inventory;
+            _inventoryStore = inventoryStore;
             ProductViewModel = productViewModel;
             if(_productViewModel != null)
             {
@@ -48,37 +49,36 @@ namespace InventoryManagamentSystem_WPF_DB.Commands
         {
             OnCanExecuteChanged(this, new EventArgs());
         }
-        public override void Execute(object? parameter)
+        public override async Task ExecuteAsync(object? parameter)
         {
             try
             {
-                AddProduct();
+                await AddProduct();
                 string message = $"Product {_productViewModel.Name} Category: {_productViewModel.ProductCategory} has been successfully added to the inventory.";
                 MessageBox.Show(message, "Success", MessageBoxButton.OK, MessageBoxImage.Information);
 
             } catch (Exception ex)
             {
-                MessageBox.Show("Failed to add product to the inventory.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(ex.InnerException.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-        private void AddProduct()
+        private async Task AddProduct()
         {
             switch (_productViewModel.ProductCategory)
             {
-                // TODO: Get rid of magic id numbers
                 case ProductCategoryEnum.Electronics:
-                    ElectronicsProduct electronics = new ElectronicsProduct(1, _productViewModel.Name, _productViewModel.ProductCategory, _productViewModel.Price, _productViewModel.Quantity, ((ElectronicsViewModel)_productViewModel).Voltage, ((ElectronicsViewModel)_productViewModel).BatteryCapacity);
-                    _inventory.AddProduct(electronics);
+                    ElectronicsProduct electronics = new ElectronicsProduct(_productViewModel.Name, _productViewModel.ProductCategory, _productViewModel.Price, _productViewModel.Quantity, ((ElectronicsViewModel)_productViewModel).Voltage, ((ElectronicsViewModel)_productViewModel).BatteryCapacity);
+                    await _inventoryStore.AddProduct(electronics);
                     break;
 
                 case ProductCategoryEnum.PerishableGoods:
-                    PerishableGoodsProduct perishableGoods = new PerishableGoodsProduct(2, _productViewModel.Name, _productViewModel.ProductCategory, _productViewModel.Price, _productViewModel.Quantity, ((PerishableGoodsViewModel)_productViewModel).Calories, ((PerishableGoodsViewModel)_productViewModel).Weight, ((PerishableGoodsViewModel)_productViewModel).ExpirationDate);
-                    _inventory.AddProduct(perishableGoods);
+                    PerishableGoodsProduct perishableGoods = new PerishableGoodsProduct(_productViewModel.Name, _productViewModel.ProductCategory, _productViewModel.Price, _productViewModel.Quantity, ((PerishableGoodsViewModel)_productViewModel).Calories, ((PerishableGoodsViewModel)_productViewModel).Weight, ((PerishableGoodsViewModel)_productViewModel).ExpirationDate);
+                    await _inventoryStore.AddProduct(perishableGoods);
                     break;
 
                 case ProductCategoryEnum.Clothing:
-                    ClothingProduct clothing = new ClothingProduct(3, _productViewModel.Name, _productViewModel.ProductCategory, _productViewModel.Price, _productViewModel.Quantity, ((ClothingProductViewModel)_productViewModel).Fabric, ((ClothingProductViewModel)_productViewModel).Size);
-                    _inventory.AddProduct(clothing);
+                    ClothingProduct clothing = new ClothingProduct(_productViewModel.Name, _productViewModel.ProductCategory, _productViewModel.Price, _productViewModel.Quantity, ((ClothingProductViewModel)_productViewModel).Fabric, ((ClothingProductViewModel)_productViewModel).Size);
+                    await _inventoryStore.AddProduct(clothing);
                     break;
             }
         }

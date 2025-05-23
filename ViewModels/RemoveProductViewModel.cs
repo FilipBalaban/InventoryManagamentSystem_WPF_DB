@@ -1,6 +1,7 @@
 ﻿using InventoryManagamentSystem_WPF_DB.Commands;
 using InventoryManagamentSystem_WPF_DB.Models;
 using InventoryManagamentSystem_WPF_DB.Services;
+using InventoryManagamentSystem_WPF_DB.Stores;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +17,7 @@ namespace InventoryManagamentSystem_WPF_DB.ViewModels
     public class RemoveProductViewModel: BaseViewModel
     {
         private int? _productID;
-        private readonly Inventory _inventory;
+        private readonly InventoryStore _inventoryStore;
         private UIElement _dynamicContentGrid;
 
         public int? ProductID
@@ -42,11 +43,11 @@ namespace InventoryManagamentSystem_WPF_DB.ViewModels
         public ICommand SearchCommand { get; }
         public ICommand RemoveProductCommand { get; }
         public ICommand CancelCommand { get; }
-        public RemoveProductViewModel(Inventory inventory, NavigationService navigationService)
+        public RemoveProductViewModel(InventoryStore inventoryStore, NavigationService navigationService)
         {
-            _inventory = inventory;
-            RemoveProductCommand = new RemoveProductCommand(inventory, _productID, this);
-            SearchCommand = new SearchCommand(_inventory, _productID, this);
+            _inventoryStore = inventoryStore;
+            RemoveProductCommand = new RemoveProductCommand(inventoryStore, _productID, this);
+            SearchCommand = new SearchCommand(_inventoryStore, _productID, this);
             CancelCommand = new NavigateCommand(navigationService);
         }
     }

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace InventoryManagamentSystem_WPF_DB.Migrations
 {
     [DbContext(typeof(InventoryDbContext))]
-    [Migration("20250522194613_TPTImplementation")]
-    partial class TPTImplementation
+    [Migration("20250523101128_InitialDbCreation")]
+    partial class InitialDbCreation
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -27,9 +27,11 @@ namespace InventoryManagamentSystem_WPF_DB.Migrations
 
             modelBuilder.Entity("InventoryManagamentSystem_WPF_DB.DTOs.ProductDTO", b =>
                 {
-                    b.Property<Guid>("ID")
+                    b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
                     b.Property<string>("Category")
                         .HasMaxLength(50)

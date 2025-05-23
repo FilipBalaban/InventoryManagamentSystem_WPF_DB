@@ -1,6 +1,8 @@
 ﻿using InventoryManagamentSystem_WPF_DB.DatabaseContext;
+using InventoryManagamentSystem_WPF_DB.DTOs;
 using InventoryManagamentSystem_WPF_DB.Models;
 using InventoryManagamentSystem_WPF_DB.Services;
+using InventoryManagamentSystem_WPF_DB.Services.InventoryManagers;
 using InventoryManagamentSystem_WPF_DB.Stores;
 using InventoryManagamentSystem_WPF_DB.ViewModels;
 using Microsoft.EntityFrameworkCore;
@@ -18,10 +20,16 @@ namespace InventoryManagamentSystem_WPF_DB
         private readonly Inventory _inventory;
         private readonly NavigationStore _navigationStore;
         private const string CONNECTION_STRING = @"Data Source=DESKTOP-R16IC6C;Initial Catalog=InventoryManagementDB;Integrated Security=True;Encrypt=True;Trust Server Certificate=True";
+        private InventoryDbContextFactory _inventoryDbContextFactory;
+        private readonly InventoryStore _inventoryStore;
         public App()
         {
-            _inventory = new Inventory();
+            _inventoryDbContextFactory = new InventoryDbContextFactory(CONNECTION_STRING);
+            DatabaseInventoryManager databaseInventoryManager = new DatabaseInventoryManager(_inventoryDbContextFactory);
+
+            _inventory = new Inventory(new InventoryBook(databaseInventoryManager));
             _navigationStore = new NavigationStore();
+            _inventoryStore = new InventoryStore(_inventory);
         }
 
         protected override void OnStartup(StartupEventArgs e)
@@ -47,15 +55,15 @@ namespace InventoryManagamentSystem_WPF_DB
         }
         private AddProductViewModel CreateAddProductViewModel()
         {
-            return new AddProductViewModel(_inventory, new NavigationService(_navigationStore, CreateMainMenuViewModel));
+            return new AddProductViewModel(_inventoryStore, new NavigationService(_navigationStore, CreateMainMenuViewModel));
         }
         private RemoveProductViewModel CreateRemoveProductViewModel()
         {
-            return new RemoveProductViewModel(_inventory, new NavigationService(_navigationStore, CreateMainMenuViewModel));
+            return new RemoveProductViewModel(_inventoryStore, new NavigationService(_navigationStore, CreateMainMenuViewModel));
         }
         private BrowseProductsViewModel CreateBrowseProductsViewModel()
         {
-            return new BrowseProductsViewModel(_inventory, new NavigationService(_navigationStore, CreateMainMenuViewModel));
+            return BrowseProductsViewModel.LoadViewModel(_inventoryStore, new NavigationService(_navigationStore, CreateMainMenuViewModel));
         }
     }
 

@@ -12,14 +12,14 @@ namespace InventoryManagamentSystem_WPF_DB.ViewModels
 {
     public class ProductViewModel : BaseViewModel
     {
-        private int _id;
+        private int? _id;
         private string? _name = string.Empty;
         private ProductCategoryEnum _productCategory;
         private decimal _price = 0;
         private int _quantity = 0;
         protected readonly Product _product;
 
-        public int ID
+        public int? ID
         {
             get => _id;
             set

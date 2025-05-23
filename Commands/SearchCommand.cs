@@ -1,4 +1,5 @@
 ﻿using InventoryManagamentSystem_WPF_DB.Models;
+using InventoryManagamentSystem_WPF_DB.Stores;
 using InventoryManagamentSystem_WPF_DB.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -10,26 +11,26 @@ using System.Windows.Controls;
 
 namespace InventoryManagamentSystem_WPF_DB.Commands
 {
-    public class SearchCommand : BaseCommand
+    public class SearchCommand : AsyncBaseCommand
     {
-        private readonly Inventory _inventory;
+        private readonly InventoryStore _inventoryStore;
         private readonly RemoveProductViewModel _removeProductViewModel;
         private ProductViewModel _productViewModel;
         public int? ProductID { get; set; }
 
-        public SearchCommand(Inventory inventory, int? productID, RemoveProductViewModel removeProductViewModel)
+        public SearchCommand(InventoryStore inventoryStore, int? productID, RemoveProductViewModel removeProductViewModel)
         {
-            _inventory = inventory;
+            _inventoryStore = inventoryStore;
             ProductID = productID;
             _removeProductViewModel = removeProductViewModel;
         }
 
-        public override void Execute(object? parameter)
+        public override async Task ExecuteAsync(object? parameter)
         {
             if(ProductID != null)
             {
-                Product product = _inventory.GetProducts().FirstOrDefault(p => p.ID == ProductID);
-                if (_inventory.GetProducts().Contains(product))
+                Product product = await _inventoryStore.GetProductByID((int)ProductID);
+                if (product != null)
                 {
                     GetProductViewModel(product);
                     _removeProductViewModel.DynamicContentElement = _productViewModel.GetDynamicDataGrid();

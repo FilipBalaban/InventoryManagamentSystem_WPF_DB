@@ -9,7 +9,7 @@
     xmlns:vms="clr-namespace:InventoryManagamentSystem_WPF_DB.ViewModels"
     Title="MainWindow"
     Width="800"
-    Height="450"
+    Height="500"
     FontSize="14"
     mc:Ignorable="d">
     <Window.Resources>

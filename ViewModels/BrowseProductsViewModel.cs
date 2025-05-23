@@ -1,6 +1,7 @@
 ﻿using InventoryManagamentSystem_WPF_DB.Commands;
 using InventoryManagamentSystem_WPF_DB.Models;
 using InventoryManagamentSystem_WPF_DB.Services;
+using InventoryManagamentSystem_WPF_DB.Stores;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -14,7 +15,7 @@ namespace InventoryManagamentSystem_WPF_DB.ViewModels
 {
     public class BrowseProductsViewModel: BaseViewModel
     {
-        private readonly Inventory _inventory;
+        private readonly InventoryStore _inventoryStore;
         private readonly ObservableCollection<ProductViewModel> _products;
         private ListView _dynamicListView;
         private bool _allProductsRadioChecked;
@@ -22,9 +23,7 @@ namespace InventoryManagamentSystem_WPF_DB.ViewModels
         private bool _perishableGoodsRadioChecked;
         private bool _clothingProductsRadioChecked;
 
-
         public IEnumerable<ProductViewModel> Products => _products;
-
         public ListView DynamicListView
         {
             get => _dynamicListView;
@@ -41,7 +40,7 @@ namespace InventoryManagamentSystem_WPF_DB.ViewModels
             {
                 _allProductsRadioChecked = value;
                 OnPropertyChanged(nameof(AllProductsRadioChecked));
-                UpdateProducts();
+                LoadProductsCommand.Execute(null);
             }
         }
         public bool ElectronicsRadioChecked
@@ -51,7 +50,7 @@ namespace InventoryManagamentSystem_WPF_DB.ViewModels
             {
                 _electronicsRadioChecked = value;
                 OnPropertyChanged(nameof(ElectronicsRadioChecked));
-                UpdateProducts();
+                LoadProductsCommand.Execute(null);
             }
         }
         public bool PerishableGoodsRadioChecked
@@ -61,7 +60,7 @@ namespace InventoryManagamentSystem_WPF_DB.ViewModels
             {
                 _perishableGoodsRadioChecked = value;
                 OnPropertyChanged(nameof(PerishableGoodsRadioChecked));
-                UpdateProducts();
+                LoadProductsCommand.Execute(null);
             }
         }
         public bool ClothingProductsRadioChecked
@@ -71,23 +70,31 @@ namespace InventoryManagamentSystem_WPF_DB.ViewModels
             {
                 _clothingProductsRadioChecked = value;
                 OnPropertyChanged(nameof(ClothingProductsRadioChecked));
-                UpdateProducts();
+                LoadProductsCommand.Execute(null);
             }
         }
         public ICommand ReturnCommand { get; set; }
-        public BrowseProductsViewModel(Inventory inventory, NavigationService navigationService)
+        public LoadProductsCommand LoadProductsCommand { get; set; }
+        public BrowseProductsViewModel(InventoryStore inventoryStore, NavigationService navigationService)
         {
-            _inventory = inventory;
+            _inventoryStore = inventoryStore;
             _products = new ObservableCollection<ProductViewModel>();
-            AllProductsRadioChecked = true;
             ReturnCommand = new NavigateCommand(navigationService);
+            LoadProductsCommand = new LoadProductsCommand(inventoryStore, this);
         }
-        public void UpdateProducts()
+        public static BrowseProductsViewModel LoadViewModel(InventoryStore inventoryStore, NavigationService navigationService)
+        {
+            BrowseProductsViewModel viewModel = new BrowseProductsViewModel(inventoryStore, navigationService);
+            viewModel.LoadProductsCommand.Execute(null);
+            return viewModel;
+        }
+        public void UpdateProducts(IEnumerable<Product> products)
         {
             _products.Clear();
             if (_clothingProductsRadioChecked)
             {
-                foreach (Product product in _inventory.GetProductsByCategory(ProductCategoryEnum.Clothing))
+                List<ClothingProduct> clothingProducts = products.Where(p => p.ProductCategory == ProductCategoryEnum.Clothing).Select(p => (ClothingProduct)p).ToList();
+                foreach (Product product in clothingProducts)
                 {
                     _products.Add(new ClothingProductViewModel((ClothingProduct)product));
                 }
@@ -95,15 +102,15 @@ namespace InventoryManagamentSystem_WPF_DB.ViewModels
             }
             else if (_electronicsRadioChecked)
             {
-                foreach (Product product in _inventory.GetProductsByCategory(ProductCategoryEnum.Electronics))
+                foreach (Product product in products.Where(p => p.ProductCategory == ProductCategoryEnum.Electronics))
                 {
                     _products.Add(new ElectronicsViewModel((ElectronicsProduct)product));
                 }
-                DynamicListView = new ElectronicsViewModel().GetContentListView();
+                DynamicListView = new ElectronicsViewModel().GetContentListView();  
             }
             else if (_perishableGoodsRadioChecked)
             {
-                foreach (Product product in _inventory.GetProductsByCategory(ProductCategoryEnum.PerishableGoods))
+                foreach (Product product in products.Where(p => p.ProductCategory == ProductCategoryEnum.PerishableGoods))
                 {
                     _products.Add(new PerishableGoodsViewModel((PerishableGoodsProduct)product));
                 }
@@ -111,12 +118,13 @@ namespace InventoryManagamentSystem_WPF_DB.ViewModels
             }
             else
             {
-                foreach(Product product in _inventory.GetProducts())
+                foreach (Product product in products)
                 {
                     _products.Add(new ProductViewModel(product));
                 }
                 DynamicListView = new ProductViewModel().GetContentListView();
             }
+
             DynamicListView.ItemsSource = _products;
         }
     }

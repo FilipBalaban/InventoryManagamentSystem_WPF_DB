@@ -1,4 +1,5 @@
 ﻿using InventoryManagamentSystem_WPF_DB.Models;
+using InventoryManagamentSystem_WPF_DB.Stores;
 using InventoryManagamentSystem_WPF_DB.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -12,9 +13,9 @@ using System.Windows.Media;
 
 namespace InventoryManagamentSystem_WPF_DB.Commands
 {
-    public class RemoveProductCommand : BaseCommand
+    public class RemoveProductCommand : AsyncBaseCommand
     {
-        private readonly Inventory _inventory;
+        private readonly InventoryStore _inventoryStore;
         private readonly RemoveProductViewModel _removeProductViewModel;
         private int? _productID;
 
@@ -27,10 +28,10 @@ namespace InventoryManagamentSystem_WPF_DB.Commands
             }
         }
         
-        public RemoveProductCommand(Inventory inventory, int? productID, RemoveProductViewModel removeProductViewModel)
+        public RemoveProductCommand(InventoryStore inventoryStore, int? productID, RemoveProductViewModel removeProductViewModel)
         {
             ProductID = productID;
-            _inventory = inventory;
+            _inventoryStore = inventoryStore;
             _removeProductViewModel = removeProductViewModel;
             _removeProductViewModel.PropertyChanged += OnViewModelPropertyChanged;
         }
@@ -42,19 +43,19 @@ namespace InventoryManagamentSystem_WPF_DB.Commands
                 OnCanExecuteChanged(this, new EventArgs());
             }
         }
-
-        public override void Execute(object? parameter)
+        public override async Task ExecuteAsync(object? parameter)
         {
-            Product product = _inventory.GetProducts().FirstOrDefault(p => p.ID == ProductID);
+
+            Product product = await _inventoryStore.GetProductByID((int)ProductID);
             TextBlock messageBlock = new TextBlock();
-            if (_inventory.GetProducts().Contains(product))
+            if (product != null)
             {
                 var result = MessageBox.Show($"Are you sure that you want to remove this product?\nProduct Info:\n{product.ToString()}", "Remove product?", MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (result == MessageBoxResult.Yes)
                 {
+                    await _inventoryStore.RemoveProduct(product);
                     messageBlock.Text = $"Product: {product.Name} with an ID: {product.ID} has successfully been removed.";
                     messageBlock.Foreground = Brushes.Green;
-                    _inventory.RemoveProduct(product);
                     _removeProductViewModel.DynamicContentElement = messageBlock;
                 }
             }

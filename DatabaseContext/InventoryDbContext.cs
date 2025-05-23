@@ -20,7 +20,6 @@ namespace InventoryManagamentSystem_WPF_DB.DatabaseContext
         public DbSet<ClothingProductDTO> ClothingProducts {get; set;}
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<ProductDTO>().ToTable("Products");
             modelBuilder.Entity<ElectronicsProductDTO>().ToTable("ElectronicProducts");
             modelBuilder.Entity<PerishableGoodsProductDTO>().ToTable("PerishableGoodsProducts");

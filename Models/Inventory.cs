@@ -1,4 +1,6 @@
-﻿using System;
+﻿using InventoryManagamentSystem_WPF_DB.Services.InventoryManagers;
+using InventoryManagamentSystem_WPF_DB.Stores;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,25 +12,25 @@ namespace InventoryManagamentSystem_WPF_DB.Models
     {
         private readonly InventoryBook _inventoryBook;
 
-        public Inventory()
+        public Inventory(InventoryBook inventoryBook)
         {
-            _inventoryBook = new InventoryBook();
+            _inventoryBook = inventoryBook;
         }
-        public void AddProduct(Product product)
+        public async Task AddProduct(Product product)
         {
-            _inventoryBook.AddProduct(product);
+            await _inventoryBook.AddProduct(product);
         }
-        public void RemoveProduct(Product product)
+        public async Task RemoveProduct(Product product)
         {
-            _inventoryBook.RemoveProduct(product);
+            await _inventoryBook.RemoveProduct(product);
         }
-        public IEnumerable<Product> GetProducts()
+        public async Task<IEnumerable<Product>> GetProducts()
         {
-            return _inventoryBook.GetProducts();
+            return await _inventoryBook.GetProducts();
         }
-        public IEnumerable<Product> GetProductsByCategory(ProductCategoryEnum category)
+        public Task<Product> GetProductByID(int id)
         {
-            return _inventoryBook.GetProductsByCategory(category);
+            return _inventoryBook.GetProductByID(id);
         }
     }
 }

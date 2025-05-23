@@ -11,7 +11,7 @@ namespace InventoryManagamentSystem_WPF_DB.DTOs
     public class ProductDTO
     {
         [Key]
-        public Guid ID { get; set; }
+        public int ID { get; set; }
         [MaxLength(100)]
         public string? Name { get; set; }
         [MaxLength(50)]

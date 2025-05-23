@@ -24,9 +24,11 @@ namespace InventoryManagamentSystem_WPF_DB.Migrations
 
             modelBuilder.Entity("InventoryManagamentSystem_WPF_DB.DTOs.ProductDTO", b =>
                 {
-                    b.Property<Guid>("ID")
+                    b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
                     b.Property<string>("Category")
                         .HasMaxLength(50)

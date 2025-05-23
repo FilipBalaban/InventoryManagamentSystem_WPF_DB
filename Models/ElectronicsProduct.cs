@@ -12,7 +12,12 @@ namespace InventoryManagamentSystem_WPF_DB.Models
     {
         public decimal Voltage { get; }
         public int BatteryCapacity { get; }
-        public ElectronicsProduct(int id,string name, ProductCategoryEnum productCategory, decimal price, int quantity, decimal voltage, int batteryCapacity): base(id, name, productCategory, price, quantity)
+        public ElectronicsProduct(string name, ProductCategoryEnum productCategory, decimal price, int quantity, decimal voltage, int batteryCapacity): base(name, productCategory, price, quantity)
+        {
+            Voltage = voltage;
+            BatteryCapacity = batteryCapacity;
+        }
+        public ElectronicsProduct(int id, string name, ProductCategoryEnum productCategory, decimal price, int quantity, decimal voltage, int batteryCapacity) : base(id, name, productCategory, price, quantity)
         {
             Voltage = voltage;
             BatteryCapacity = batteryCapacity;

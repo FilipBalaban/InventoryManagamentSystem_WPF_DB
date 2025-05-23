@@ -1,4 +1,6 @@
 ﻿using InventoryManagamentSystem_WPF_DB.Exceptions;
+using InventoryManagamentSystem_WPF_DB.Services.InventoryManagers;
+using InventoryManagamentSystem_WPF_DB.Stores;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,40 +12,27 @@ namespace InventoryManagamentSystem_WPF_DB.Models
     public class InventoryBook
     {
         private readonly List<Product> _products;
-
-        public InventoryBook()
+        private readonly DatabaseInventoryManager _databaseInventoryManager;
+        public InventoryBook(DatabaseInventoryManager databaseInventoryManager)
         {
             _products = new List<Product>();
+            _databaseInventoryManager = databaseInventoryManager;
         }
-        public void AddProduct(Product product)
+        public async Task AddProduct(Product product)
         {
-            if(!_products.Contains(_products.FirstOrDefault(p => p.ID == product.ID))) 
-            {
-                _products.Add(product);
-            }
-            else
-            {
-                throw new DuplicateProductException(product);
-            }
+            await _databaseInventoryManager.AddProduct(product);
         }
-        public void RemoveProduct(Product product)
+        public async Task RemoveProduct(Product product)
         {
-            if (_products.Contains(_products.FirstOrDefault(p => p.ID == product.ID))) 
-            {
-                _products.Remove(product);
-            }
-            else
-            {
-                throw new ProductNotFoundException(product);
-            }
+            await _databaseInventoryManager.RemoveProduct(product);
         }
-        public IEnumerable<Product> GetProducts()
+        public async Task<IEnumerable<Product>> GetProducts()
         {
-            return _products;
+            return await _databaseInventoryManager.GetAllProducts();
         }
-        public IEnumerable<Product> GetProductsByCategory(ProductCategoryEnum category)
+        public async Task<Product> GetProductByID(int id)
         {
-            return _products.Where(p => p.ProductCategory == category);
+            return await _databaseInventoryManager.GetProductByID(id);
         }
     }
 }

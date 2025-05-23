@@ -15,7 +15,7 @@ namespace InventoryManagamentSystem_WPF_DB.ViewModels
 {
     public class AddProductViewModel: BaseViewModel
     {
-        private readonly Inventory _inventory;
+        private readonly InventoryStore _inventoryStore;
         private ProductViewModel _productViewModel;
         private ProductCategoryEnum _selectedCategory;
         private Grid _dynamicContentGrid;
@@ -52,10 +52,10 @@ namespace InventoryManagamentSystem_WPF_DB.ViewModels
                 OnPropertyChanged(nameof(DynamicContentGrid));
             }
         }
-        public AddProductViewModel(Inventory inventory, NavigationService navigationService)
+        public AddProductViewModel(InventoryStore inventoryStore, NavigationService navigationService)
         {
-            _inventory = inventory;
-            AddProductCommand = new AddProductCommand(_inventory, null);
+            _inventoryStore = inventoryStore;
+            AddProductCommand = new AddProductCommand(_inventoryStore, null);
             CancelCommand = new NavigateCommand(navigationService);
         }
         private void UpdateProductViewModel()
