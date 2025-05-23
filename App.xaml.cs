@@ -19,7 +19,7 @@ namespace InventoryManagamentSystem_WPF_DB
     {
         private readonly Inventory _inventory;
         private readonly NavigationStore _navigationStore;
-        private const string CONNECTION_STRING = @"Data Source=DESKTOP-R16IC6C;Initial Catalog=InventoryManagementDB;Integrated Security=True;Encrypt=True;Trust Server Certificate=True";
+        private const string CONNECTION_STRING = "Data Source=InventoryManagement.db";
         private InventoryDbContextFactory _inventoryDbContextFactory;
         private readonly InventoryStore _inventoryStore;
         public App()
@@ -34,8 +34,7 @@ namespace InventoryManagamentSystem_WPF_DB
 
         protected override void OnStartup(StartupEventArgs e)
         {
-            DbContextOptions options = new DbContextOptionsBuilder().UseSqlServer(CONNECTION_STRING).Options;
-            using (InventoryDbContext dbContext = new InventoryDbContext(options))
+            using (InventoryDbContext dbContext = _inventoryDbContextFactory.CreateDbContext())
             {
                 dbContext.Database.Migrate();
             }

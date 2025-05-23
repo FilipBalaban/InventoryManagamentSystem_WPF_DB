@@ -15,12 +15,12 @@ namespace InventoryManagamentSystem_WPF_DB.Migrations
                 name: "Products",
                 columns: table => new
                 {
-                    ID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
-                    Category = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    Price = table.Column<decimal>(type: "decimal(7,2)", nullable: false),
-                    Quantity = table.Column<int>(type: "int", nullable: false)
+                    ID = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Name = table.Column<string>(type: "TEXT", maxLength: 100, nullable: true),
+                    Category = table.Column<string>(type: "TEXT", maxLength: 50, nullable: true),
+                    Price = table.Column<decimal>(type: "decimal(7, 2)", nullable: false),
+                    Quantity = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -31,7 +31,8 @@ namespace InventoryManagamentSystem_WPF_DB.Migrations
                 name: "ClothingProducts",
                 columns: table => new
                 {
-                    ID = table.Column<int>(type: "int", nullable: false),
+                    ID = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
                     Size = table.Column<string>(type: "varchar(5)", nullable: true),
                     Fabric = table.Column<string>(type: "nvarchar(25)", nullable: true)
                 },
@@ -50,9 +51,10 @@ namespace InventoryManagamentSystem_WPF_DB.Migrations
                 name: "ElectronicProducts",
                 columns: table => new
                 {
-                    ID = table.Column<int>(type: "int", nullable: false),
-                    Voltage = table.Column<decimal>(type: "decimal(7,2)", nullable: false),
-                    BatteryCapacity = table.Column<int>(type: "int", nullable: false)
+                    ID = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Voltage = table.Column<decimal>(type: "decimal(7, 2)", nullable: false),
+                    BatteryCapacity = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -69,10 +71,11 @@ namespace InventoryManagamentSystem_WPF_DB.Migrations
                 name: "PerishableGoodsProducts",
                 columns: table => new
                 {
-                    ID = table.Column<int>(type: "int", nullable: false),
-                    Calories = table.Column<decimal>(type: "decimal(5,2)", nullable: false),
-                    Weight = table.Column<decimal>(type: "decimal(5,2)", nullable: false),
-                    ExpirationDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    ID = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Calories = table.Column<decimal>(type: "decimal(5, 2)", nullable: false),
+                    Weight = table.Column<decimal>(type: "decimal(5, 2)", nullable: false),
+                    ExpirationDate = table.Column<DateTime>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {

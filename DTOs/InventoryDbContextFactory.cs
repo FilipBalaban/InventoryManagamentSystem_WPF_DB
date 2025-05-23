@@ -18,7 +18,7 @@ namespace InventoryManagamentSystem_WPF_DB.DTOs
         }
         public InventoryDbContext CreateDbContext()
         {
-            DbContextOptions options = new DbContextOptionsBuilder().UseSqlServer(_connectionString).Options;
+            DbContextOptions options = new DbContextOptionsBuilder().UseSqlite(_connectionString).Options;
             return new InventoryDbContext(options);
         }
 

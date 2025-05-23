@@ -12,7 +12,7 @@ namespace InventoryManagamentSystem_WPF_DB.DatabaseContext
     {
         public InventoryDbContext CreateDbContext(string[] args)
         {
-            DbContextOptions options = new DbContextOptionsBuilder().UseSqlServer(@"Data Source=DESKTOP-R16IC6C;Initial Catalog=InventoryManagementDB;Integrated Security=True;Encrypt=True;Trust Server Certificate=True").Options;
+            DbContextOptions options = new DbContextOptionsBuilder().UseSqlite("Data Source=InventoryManagement.db").Options;
             return new InventoryDbContext(options);
         }
     }

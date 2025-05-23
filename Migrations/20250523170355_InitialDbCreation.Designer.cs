@@ -3,7 +3,6 @@ using System;
 using InventoryManagamentSystem_WPF_DB.DatabaseContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
@@ -12,40 +11,34 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace InventoryManagamentSystem_WPF_DB.Migrations
 {
     [DbContext(typeof(InventoryDbContext))]
-    [Migration("20250523101128_InitialDbCreation")]
+    [Migration("20250523170355_InitialDbCreation")]
     partial class InitialDbCreation
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder
-                .HasAnnotation("ProductVersion", "9.0.5")
-                .HasAnnotation("Relational:MaxIdentifierLength", 128);
-
-            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+            modelBuilder.HasAnnotation("ProductVersion", "9.0.5");
 
             modelBuilder.Entity("InventoryManagamentSystem_WPF_DB.DTOs.ProductDTO", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Category")
                         .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Name")
                         .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("TEXT");
 
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(7, 2)");
 
                     b.Property<int>("Quantity")
-                        .HasColumnType("int");
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("ID");
 
@@ -72,7 +65,7 @@ namespace InventoryManagamentSystem_WPF_DB.Migrations
                     b.HasBaseType("InventoryManagamentSystem_WPF_DB.DTOs.ProductDTO");
 
                     b.Property<int>("BatteryCapacity")
-                        .HasColumnType("int");
+                        .HasColumnType("INTEGER");
 
                     b.Property<decimal>("Voltage")
                         .HasColumnType("decimal(7, 2)");
@@ -88,7 +81,7 @@ namespace InventoryManagamentSystem_WPF_DB.Migrations
                         .HasColumnType("decimal(5, 2)");
 
                     b.Property<DateTime>("ExpirationDate")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("TEXT");
 
                     b.Property<decimal>("Weight")
                         .HasColumnType("decimal(5, 2)");
