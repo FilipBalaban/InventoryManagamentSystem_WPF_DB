@@ -62,6 +62,10 @@ namespace InventoryManagamentSystem_WPF_DB.Commands
                 MessageBox.Show(ex.InnerException.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+        /// <summary>
+        /// Adds a product to the inventoryStore that contains data from the viewModel
+        /// </summary>
+        /// <returns></returns>
         private async Task AddProduct()
         {
             switch (_productViewModel.ProductCategory)

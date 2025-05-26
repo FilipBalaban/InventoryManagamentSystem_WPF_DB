@@ -20,7 +20,6 @@ namespace InventoryManagamentSystem_WPF_DB.Commands
         {
             CanExecuteChanged?.Invoke(sender, e);
         }
-
         public abstract void Execute(object? parameter);
     }
 }

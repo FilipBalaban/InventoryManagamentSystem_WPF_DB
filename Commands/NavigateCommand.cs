@@ -17,7 +17,10 @@ namespace InventoryManagamentSystem_WPF_DB.Commands
         {
             _navigationService = navigationService;
         }
-
+        /// <summary>
+        /// Executes Navigate() in navigation service that changed the current view model
+        /// </summary>
+        /// <param name="parameter"></param>
         public override void Execute(object? parameter)
         {
             _navigationService.Navigate();

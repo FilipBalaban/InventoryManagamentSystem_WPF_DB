@@ -46,7 +46,7 @@ namespace InventoryManagamentSystem_WPF_DB.ViewModels
             {
                 _productCategory = value;
                 OnPropertyChanged(nameof(ProductCategory));
-                OnPropertyChanged(nameof(Name));
+                //OnPropertyChanged(nameof(Name));
             }
         }
         public decimal Price
@@ -71,6 +71,10 @@ namespace InventoryManagamentSystem_WPF_DB.ViewModels
         {
             
         }
+        /// <summary>
+        /// Constructor for filling in data from the inventory to the productViewModel so that we can display it
+        /// </summary>
+        /// <param name="product">Any type of product model</param>
         public ProductViewModel(Product product)
         {
             _product = product;
@@ -80,15 +84,23 @@ namespace InventoryManagamentSystem_WPF_DB.ViewModels
             Price = product.Price;
             Quantity = product.Quantity;
         }
+        /// <summary>
+        /// Used for displaying a gridView with textBoxes and textBlocks on AddProductViewModel, that represent the properties that need to be filled in trough the textBoxes, that are specific to each product category 
+        /// </summary>
+        /// <returns>Grid with textBlocks and textBoxes for specific product properties</returns>
         public virtual Grid GetDynamicInputGrid()
         {
             return new Grid();
         }
+        /// <summary>
+        /// Used for displaying product info on the RemoveProductViewModel
+        /// </summary>
+        /// <returns>A grid or sometimes a grid inside of a border that contains product data</returns>
         public virtual UIElement GetDynamicDataGrid()
         {
             Grid grid = new Grid();
 
-            grid.RowDefinitions.Add(new RowDefinition()); // 0
+            grid.RowDefinitions.Add(new RowDefinition()); // Row 0
             grid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(8) }); // 1
             grid.RowDefinitions.Add(new RowDefinition()); // 2
             grid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(8) }); // 3
@@ -124,6 +136,10 @@ namespace InventoryManagamentSystem_WPF_DB.ViewModels
 
             return grid;
         }
+        /// <summary>
+        /// Used for displaying product data on BrowseProductViewModel - displaying a list view
+        /// </summary>
+        /// <returns>List view with product information</returns>
         public virtual ListView GetContentListView()
         {
             ListView listView = new ListView();
@@ -132,16 +148,25 @@ namespace InventoryManagamentSystem_WPF_DB.ViewModels
 
             return listView;
         }
+        /// <summary>
+        /// Returns if all product properties are filled - if true we can add the product in the AddProductViewModel
+        /// </summary>
+        /// <returns>Bool value that is true if all properties of a product are filled</returns>
         public virtual bool ArePropertiesFilled()
         {
             return !string.IsNullOrEmpty(_name) && _price > 0 && _quantity > 0;
         }
+        // Clears all the properties when we switch product category on the addProductViewModel for example, we do this because some properties appear like they are cleared ant that txtBox is empty but it still holds data
         public virtual void ClearProperties()
         {
             Name = string.Empty;
             Price = 0;
             Quantity = 0;
         }
+        /// <summary>
+        /// Helper method to get the the basePropertiesGrid for GetDynamicDataGrid (it lets all inherited classes get the data grid with base class properties, but this returns a grid as opposed to the GetDynamicDataGrid which is not private and which returns a listview)
+        /// </summary>
+        /// <returns>Grid with base properties</returns>
         protected Grid GetBasePropertiesGrid()
         {
             Grid grid = new Grid();
@@ -180,6 +205,12 @@ namespace InventoryManagamentSystem_WPF_DB.ViewModels
 
             return grid;
         }
+        /// <summary>
+        /// Helper method that creates a stackpanel with two stack blocks - one that acts as a label for the property and one that holds the value
+        /// </summary>
+        /// <param name="property">Name of the property of a product</param>
+        /// <param name="suffix">If we need to add a suffix at the end of product data</param>
+        /// <returns>Stackpanel with two stack blocks</returns>
         protected StackPanel GetTextBlockStackPanel(string property, string? suffix = null)
         {
             TextBlock textBlock = new TextBlock()
@@ -199,6 +230,7 @@ namespace InventoryManagamentSystem_WPF_DB.ViewModels
                     isBaseProperty = true;
                 }
             }
+            // Is a property is not a base class proeprty - adds a "Product." so that it can nest and access an inheritad class proepty
             if (!isBaseProperty)
             {
                 property = $"Product.{property}";
@@ -218,6 +250,10 @@ namespace InventoryManagamentSystem_WPF_DB.ViewModels
             }
             return stackPanel;
         }
+        /// <summary>
+        /// Helper method for getting the base grid for the grid view
+        /// </summary>
+        /// <returns>Grid with base properties</returns>
         protected GridView GetBaseGridView()
         {
             GridView gridView = new GridView();
@@ -271,6 +307,11 @@ namespace InventoryManagamentSystem_WPF_DB.ViewModels
 
             return gridView;
         }
+        /// <summary>
+        /// Helper method that converts from pascal case which is used for property names to normal case that can be displayed on the UI
+        /// </summary>
+        /// <param name="str">PascalCase string</param>
+        /// <returns>Returns a string converted from pascal case to normal case</returns>
         private string FromPascalCase(string str)
         {
             int upperCount = str.Where(c => char.IsUpper(c)).Count();

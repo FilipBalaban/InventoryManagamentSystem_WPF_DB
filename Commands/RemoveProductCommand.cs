@@ -27,7 +27,6 @@ namespace InventoryManagamentSystem_WPF_DB.Commands
                 _productID = value;
             }
         }
-        
         public RemoveProductCommand(InventoryStore inventoryStore, int? productID, RemoveProductViewModel removeProductViewModel)
         {
             ProductID = productID;
@@ -35,7 +34,11 @@ namespace InventoryManagamentSystem_WPF_DB.Commands
             _removeProductViewModel = removeProductViewModel;
             _removeProductViewModel.PropertyChanged += OnViewModelPropertyChanged;
         }
-
+        /// <summary>
+        /// Calls OnCanExecuteChanged if DynamicContentElement's value is changed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OnViewModelPropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
             if(e.PropertyName == nameof(_removeProductViewModel.DynamicContentElement))
@@ -43,6 +46,11 @@ namespace InventoryManagamentSystem_WPF_DB.Commands
                 OnCanExecuteChanged(this, new EventArgs());
             }
         }
+        /// <summary>
+        /// Removes product from inventoryStore if it exists in the inventory
+        /// </summary>
+        /// <param name="parameter"></param>
+        /// <returns></returns>
         public override async Task ExecuteAsync(object? parameter)
         {
 
@@ -66,6 +74,11 @@ namespace InventoryManagamentSystem_WPF_DB.Commands
                 _removeProductViewModel.DynamicContentElement = messageBlock;
             }
         }
+        /// <summary>
+        /// Allows command to be executed if DynamicContentElement is border - as it is only border when the prouct that user searched for exists in the interview, as each productViewModel sets DynamicContentElement to be a border that contains grid with product data
+        /// </summary>
+        /// <param name="parameter"></param>
+        /// <returns>If DynamicContentElement is true</returns>
         public override bool CanExecute(object? parameter)
         {
             return _removeProductViewModel.DynamicContentElement is Border;

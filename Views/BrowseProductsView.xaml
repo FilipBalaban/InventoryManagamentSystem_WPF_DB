@@ -26,7 +26,6 @@
                 Content="Return" />
         </Grid>
 
-        <!--  TODO: Add binding  -->
         <StackPanel
             Grid.Row="1"
             Margin="0,32,0,0"
@@ -49,36 +48,8 @@
                 IsChecked="{Binding ClothingProductsRadioChecked}" />
         </StackPanel>
 
-        <!--  TODO: Add dynamyc listview - delete this one  -->
         <Grid Grid.Row="2" Margin="0,24,0,0">
-
             <ContentControl Content="{Binding DynamicListView, UpdateSourceTrigger=PropertyChanged}" />
-            <!--<ListView ItemsSource="{Binding Products}">
-                <ListView.View>
-                    <GridView>
-                        <GridViewColumn
-                            Width="100"
-                            DisplayMemberBinding="{Binding ID}"
-                            Header="ID" />
-                        <GridViewColumn
-                            Width="100"
-                            DisplayMemberBinding="{Binding Name}"
-                            Header="Name" />
-                        <GridViewColumn
-                            Width="140"
-                            DisplayMemberBinding="{Binding ProductCategory}"
-                            Header="Category" />
-                        <GridViewColumn
-                            Width="100"
-                            DisplayMemberBinding="{Binding Price}"
-                            Header="Price" />
-                        <GridViewColumn
-                            Width="100"
-                            DisplayMemberBinding="{Binding Quantity}"
-                            Header="Quantity" />
-                    </GridView>
-                </ListView.View>
-            </ListView>-->
         </Grid>
     </Grid>
 </UserControl>

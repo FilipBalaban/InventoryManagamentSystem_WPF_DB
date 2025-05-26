@@ -31,6 +31,9 @@ namespace InventoryManagamentSystem_WPF_DB.ViewModels
                 ((SearchCommand)SearchCommand).ProductID = _productID;
             }
         }
+        /// <summary>
+        /// Property that will be used to display product data on the UI
+        /// </summary>
         public UIElement DynamicContentElement
         {
             get => _dynamicContentGrid;

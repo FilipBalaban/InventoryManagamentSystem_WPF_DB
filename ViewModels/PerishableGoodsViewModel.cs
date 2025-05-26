@@ -57,7 +57,6 @@ namespace InventoryManagamentSystem_WPF_DB.ViewModels
             Weight = product.Weight;
             ExpirationDate = product.ExpirationDate;
         }
-
         public override ListView GetContentListView()
         {
             ListView listView = new ListView();
@@ -93,7 +92,6 @@ namespace InventoryManagamentSystem_WPF_DB.ViewModels
             listView.View = gridView;
             return listView;
         }
-
         public override UIElement GetDynamicDataGrid()
         {
             Grid grid = GetBasePropertiesGrid();
@@ -130,7 +128,6 @@ namespace InventoryManagamentSystem_WPF_DB.ViewModels
             border.Child = grid;
             return border;
         }
-
         public override Grid GetDynamicInputGrid()
         {
             Grid grid = new Grid();

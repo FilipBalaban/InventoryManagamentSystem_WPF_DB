@@ -25,6 +25,11 @@ namespace InventoryManagamentSystem_WPF_DB.Commands
             _removeProductViewModel = removeProductViewModel;
         }
 
+        /// <summary>
+        /// If product exists - command updates the DynamicContentElement of removeProductViewModel and displays product info
+        /// </summary>
+        /// <param name="parameter"></param>
+        /// <returns></returns>
         public override async Task ExecuteAsync(object? parameter)
         {
             if(ProductID != null)
@@ -41,6 +46,10 @@ namespace InventoryManagamentSystem_WPF_DB.Commands
             _removeProductViewModel.DynamicContentElement = new TextBlock { Text = "Product not found" }; 
             
         }
+        /// <summary>
+        /// sets _productViewModel to be an appropriate viewModel type based on its category
+        /// </summary>
+        /// <param name="product"></param>
         private void GetProductViewModel(Product product)
         {
             switch (product.ProductCategory)

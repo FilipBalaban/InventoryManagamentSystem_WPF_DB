@@ -19,6 +19,11 @@ namespace InventoryManagamentSystem_WPF_DB.Commands
             _inventoryStore = inventoryStore;
             _browseProductsViewModel = browseProductsViewModel;
         }
+        /// <summary>
+        /// Uses inventory store to fetch products from DB and calls UpdateProducts() from BrowseProductViewModel 
+        /// </summary>
+        /// <param name="parameter"></param>
+        /// <returns></returns>
         public override async Task ExecuteAsync(object? parameter)
         {
             await _inventoryStore.LoadProducts();

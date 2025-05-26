@@ -30,6 +30,7 @@
                 <RowDefinition Height="auto" />
             </Grid.RowDefinitions>
             <TextBlock Text="Name:" />
+            <!--  Binding in properties is set to two way, because we clear the text property when we switch the product category  -->
             <TextBox Grid.Row="2" Text="{Binding Product.Name, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
         </Grid>
 

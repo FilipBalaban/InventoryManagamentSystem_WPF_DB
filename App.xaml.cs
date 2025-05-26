@@ -39,7 +39,7 @@ namespace InventoryManagamentSystem_WPF_DB
                 dbContext.Database.Migrate();
             }
 
-                _navigationStore.CurrentViewModel = CreateMainMenuViewModel();
+            _navigationStore.CurrentViewModel = CreateMainMenuViewModel();
             MainWindow mainWindow = new MainWindow()
             {
                 DataContext = new MainViewModel(_navigationStore)

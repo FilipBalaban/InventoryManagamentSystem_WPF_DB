@@ -27,6 +27,11 @@ namespace InventoryManagamentSystem_WPF_DB.Commands
             ExecuteAsync(parameter);
             IsExecuting = false;
         }
+        /// <summary>
+        /// Executes commands functionallity async
+        /// </summary>
+        /// <param name="parameter"></param>
+        /// <returns></returns>
         public abstract Task ExecuteAsync(object? parameter);
     }
 }

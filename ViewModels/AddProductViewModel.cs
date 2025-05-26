@@ -58,6 +58,9 @@ namespace InventoryManagamentSystem_WPF_DB.ViewModels
             AddProductCommand = new AddProductCommand(_inventoryStore, null);
             CancelCommand = new NavigateCommand(navigationService);
         }
+        /// <summary>
+        /// Updates the DynamicContentGrid with fitting properties textBoxes for each product type
+        /// </summary>
         private void UpdateProductViewModel()
         {
             switch (_selectedCategory)

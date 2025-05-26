@@ -11,12 +11,14 @@ namespace InventoryManagamentSystem_WPF_DB.Models
         public decimal Calories { get; }
         public decimal Weight { get; }
         public DateTime ExpirationDate { get; }
+        // Filling data in trough viewModel
         public PerishableGoodsProduct(string name, ProductCategoryEnum productCategory, decimal price, int quantity, decimal calories, decimal weight, DateTime expirationDate) : base(name, productCategory, price, quantity)
         {
             Calories = calories;
             Weight = weight;
             ExpirationDate = expirationDate;
         }
+        // Used for filling in data into it from db
         public PerishableGoodsProduct(int id, string name, ProductCategoryEnum productCategory, decimal price, int quantity, decimal calories, decimal weight, DateTime expirationDate) : base(id, name, productCategory, price, quantity)
         {
             Calories = calories;

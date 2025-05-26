@@ -8,9 +8,6 @@ namespace InventoryManagamentSystem_WPF_DB.Models
 {
     public abstract class Product
     {
-        private static int _electronicsProductCounter;
-        private static int _perishableGoodsProductCounter;
-        private static int _clothingProductCounter;
         public int? ID { get; }
         public string? Name { get; }
         public ProductCategoryEnum ProductCategory { get; }

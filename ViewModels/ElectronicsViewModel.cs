@@ -46,7 +46,6 @@ namespace InventoryManagamentSystem_WPF_DB.ViewModels
             Voltage = product.Voltage;
             BatteryCapacity = product.BatteryCapacity;
         }
-
         public override ListView GetContentListView()
         {
             ListView listView = new ListView();
@@ -101,7 +100,6 @@ namespace InventoryManagamentSystem_WPF_DB.ViewModels
             border.Child = grid;
             return border;
         }
-
         public override Grid GetDynamicInputGrid()
         {
             Grid grid = new Grid();
